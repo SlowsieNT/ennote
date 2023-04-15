@@ -2,6 +2,10 @@
 
 ## This is free and unencumbered software released into the public domain.
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
+
+## Screenshot(s)
+<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/ennote.png">
+
 ## Help?
 
 Button "+" may be right clicked to see options such as: `Open...` and `Set current directory`<br>
