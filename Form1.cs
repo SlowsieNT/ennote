@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -54,6 +54,7 @@ namespace ennote
             if (!aNoExit) Close();
         }
         Random rng = new Random();
+        bool PasswordArgSet=false;
         public Form1(string[] aArgs)
         {
             //MessageBox.Show("pass1");
@@ -62,7 +63,6 @@ namespace ennote
             if (aArgs.Length > 0)
             {
                 var fi = new FileInfo(aArgs[0]);
-
                 FileName = fi.Name;
             }
             if (Directory.Exists(FileName)) {
@@ -71,9 +71,10 @@ namespace ennote
             } else {
                 UserDir = Directory.GetCurrentDirectory();
             }
-            //MessageBox.Show("pass2");
-            if (aArgs.Length > 1)
+            if (aArgs.Length > 1) {
+                PasswordArgSet = true;
                 Password = aArgs[1];
+            }
             InitializeComponent();
             try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); }
             catch { }
@@ -128,10 +129,12 @@ namespace ennote
             var fi = new FileInfo(aFileName);
             var feFlag = File.Exists(aFileName);
             byte[] ebuffer = new byte[] { };
-            var pwBox = new PasswordBox("Password / new password:" + (feFlag ? "\r\nFile: "+fi.Name: ""), "Enter note's password", Password);
-            pwBox.StartPosition = FormStartPosition.CenterParent;
-            pwBox.ShowDialog();
-            Password = pwBox.ResponseValue;
+            if (!PasswordArgSet) {
+                var pwBox = new PasswordBox("Password / new password:" + (feFlag ? "\r\nFile: " + fi.Name : ""), "Enter note's password", Password);
+                pwBox.StartPosition = FormStartPosition.CenterParent;
+                pwBox.ShowDialog();
+                Password = pwBox.ResponseValue;
+            }
             if (feFlag) {
                 try {
                     ebuffer = File.ReadAllBytes(aFileName);
