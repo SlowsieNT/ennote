@@ -1,4 +1,4 @@
-﻿namespace ennote
+namespace ennote
 {
     partial class Form1
     {
