@@ -17,3 +17,6 @@ or<br>
 `progName <FileName>` - to open file without password.<br>
 or EVEN:<br>
 `progName <FolderName>` - to set as working directory.<br>
+
+## License
+All of files are **Unlicense**d. No rights are reserved.
