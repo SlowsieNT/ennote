@@ -9,10 +9,10 @@
 ## Help?
 
 Button "+" may be right clicked to see options such as: `Open...` and `Set current directory`<br>
-<img alt="Plus button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/plusCtx.png">
+<img alt="Plus button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/plusCtx.png"><br>
 Button "..." may be clicked, or right clicked to see options such as:<br>
 `New Password`, `Delete Note`, `Register File Extension`, `Open Containing Folder`.<br>
-<img alt="... button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/tdotCtx.png">
+<img alt="... button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/tdotCtx.png"><br>
 
 ## Command Line syntax
 
