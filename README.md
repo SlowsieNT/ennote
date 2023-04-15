@@ -5,7 +5,7 @@
 
 ## Screenshot(s)
 <img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/ennote.png"><br>
-
+<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
 ## Help?
 
 Button "+" may be right clicked to see options such as: `Open...` and `Set current directory`<br>
