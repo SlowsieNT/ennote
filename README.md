@@ -4,15 +4,15 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Screenshot(s)
-<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/ennote.png">
+<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/ennote.png"><br>
 
 ## Help?
 
 Button "+" may be right clicked to see options such as: `Open...` and `Set current directory`<br>
-(https://prnt.sc/_rfuTLrwyBFx)<br>
+<img alt="Plus button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/plusCtx.png">
 Button "..." may be clicked, or right clicked to see options such as:<br>
 `New Password`, `Delete Note`, `Register File Extension`, `Open Containing Folder`.<br>
-(https://prnt.sc/OSEz07p1s6md)<br>
+<img alt="... button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/tdotCtx.png">
 
 ## Command Line syntax
 
