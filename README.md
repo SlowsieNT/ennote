@@ -7,6 +7,10 @@
 App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
 
+## Why it exists?
+It's just selfless (ego-free) project.<br>
+I don't reserve any rights to source code, do as you will with it.<br>
+
 ## Screenshot(s)
 Right click on RTextbox<br>
 <img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
