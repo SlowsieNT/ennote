@@ -6,7 +6,8 @@
 ## Screenshot(s)
 Right click on RTextbox<br>
 <img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
-Button "+" may be right clicked to see options such as: `Open...` and `Set current directory`<br>
+Button "+" may be right clicked to see options such as:<br>
+`Open...` and `Set current directory`<br>
 <img alt="Plus button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/plusCtx.png"><br>
 Button "..." may be clicked, or right clicked to see options such as:<br>
 `New Password`, `Delete Note`, `Register File Extension`, `Open Containing Folder`.<br>
