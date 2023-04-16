@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Windows.Forms;
@@ -27,6 +28,56 @@ namespace ennote
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
+        #region border
+        protected override void OnPaint(PaintEventArgs e) // you can safely omit this method if you want
+        {
+            e.Graphics.FillRectangle(Brushes.DimGray, RTop);
+            e.Graphics.FillRectangle(Brushes.DimGray, RLeft);
+            e.Graphics.FillRectangle(Brushes.DimGray, RRight);
+            e.Graphics.FillRectangle(Brushes.DimGray, RBottom);
+        }
+
+        private const int
+            HTLEFT = 10,
+            HTRIGHT = 11,
+            HTTOP = 12,
+            HTTOPLEFT = 13,
+            HTTOPRIGHT = 14,
+            HTBOTTOM = 15,
+            HTBOTTOMLEFT = 16,
+            HTBOTTOMRIGHT = 17;
+
+        const int RBSize = 4; // you can rename this variable if you like
+
+        Rectangle RTop { get { return new Rectangle(0, 0, Width, RBSize); } }
+        Rectangle RLeft { get { return new Rectangle(0, 0, RBSize, Height); } }
+        Rectangle RBottom { get { return new Rectangle(0, Height - RBSize, Width, RBSize); } }
+        Rectangle RRight { get { return new Rectangle(Width - RBSize, 0, RBSize, Height); } }
+        Rectangle TopLeft { get { return new Rectangle(0, 0, RBSize, RBSize); } }
+        Rectangle TopRight { get { return new Rectangle(Width - RBSize, 0, RBSize, RBSize); } }
+        Rectangle BottomLeft { get { return new Rectangle(0, Height - RBSize, RBSize, RBSize); } }
+        Rectangle BottomRight { get { return new Rectangle(Width - RBSize, Height - RBSize, RBSize, RBSize); } }
+
+
+        protected override void WndProc(ref Message message)
+        {
+            base.WndProc(ref message);
+
+            if (message.Msg == 0x84) // WM_NCHITTEST
+            {
+                var cursor = this.PointToClient(Cursor.Position);
+
+                if (TopLeft.Contains(cursor)) message.Result = (IntPtr)HTTOPLEFT;
+                else if (TopRight.Contains(cursor)) message.Result = (IntPtr)HTTOPRIGHT;
+                else if (BottomLeft.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMLEFT;
+                else if (BottomRight.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMRIGHT;
+                else if (RTop.Contains(cursor)) message.Result = (IntPtr)HTTOP;
+                else if (RLeft.Contains(cursor)) message.Result = (IntPtr)HTLEFT;
+                else if (RRight.Contains(cursor)) message.Result = (IntPtr)HTRIGHT;
+                else if (RBottom.Contains(cursor)) message.Result = (IntPtr)HTBOTTOM;
+            }
+        }
+        #endregion
         long timestamp(bool aMS = false, long aAddVal = 0)
         {
             long epochTicks = new DateTime(1970, 1, 1).Ticks;
@@ -107,15 +158,19 @@ namespace ennote
             label1.MouseDown += delegate (object s, MouseEventArgs e) {
                 if (lastclickdate > 0 && timestamp(true, -lastclickdate) < 235) {
                     lastclickdate = 0;
-                    int fnePos = FileName.LastIndexOf(".");
-                    textBox1.Text = FileName;
-                    textBox1.Show();
-                    textBox1.Focus();
-                    if (fnePos > 0)
-                        textBox1.Select(0, fnePos);
+                    ShowRename();
                 }
                 lastclickdate = timestamp(true);
             };
+        }
+        void ShowRename()
+        {
+            int fnePos = FileName.LastIndexOf(".");
+            textBox1.Text = FileName;
+            textBox1.Show();
+            textBox1.Focus();
+            if (fnePos > 0)
+                textBox1.Select(0, fnePos);
         }
         void MoveOnMouseDown(object sender, MouseEventArgs e)
         {
@@ -333,55 +388,10 @@ namespace ennote
             var eep = Environment.ExpandEnvironmentVariables("%SystemRoot%\\explorer.exe");
             Process.Start(eep, '"' + UserDir + '"');
         }
-        #region border
-        protected override void OnPaint(PaintEventArgs e) // you can safely omit this method if you want
+        private void renameToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            e.Graphics.FillRectangle(Brushes.DimGray, RTop);
-            e.Graphics.FillRectangle(Brushes.DimGray, RLeft);
-            e.Graphics.FillRectangle(Brushes.DimGray, RRight);
-            e.Graphics.FillRectangle(Brushes.DimGray, RBottom);
+            ShowRename();
         }
         
-        private const int
-            HTLEFT = 10,
-            HTRIGHT = 11,
-            HTTOP = 12,
-            HTTOPLEFT = 13,
-            HTTOPRIGHT = 14,
-            HTBOTTOM = 15,
-            HTBOTTOMLEFT = 16,
-            HTBOTTOMRIGHT = 17;
-
-        const int RBSize = 4; // you can rename this variable if you like
-
-        Rectangle RTop { get { return new Rectangle(0, 0, Width, RBSize); } }
-        Rectangle RLeft { get { return new Rectangle(0, 0, RBSize, Height); } }
-        Rectangle RBottom { get { return new Rectangle(0, Height - RBSize, Width, RBSize); } }
-        Rectangle RRight { get { return new Rectangle(Width - RBSize, 0, RBSize, Height); } }
-        Rectangle TopLeft { get { return new Rectangle(0, 0, RBSize, RBSize); } }
-        Rectangle TopRight { get { return new Rectangle(Width - RBSize, 0, RBSize, RBSize); } }
-        Rectangle BottomLeft { get { return new Rectangle(0, Height - RBSize, RBSize, RBSize); } }
-        Rectangle BottomRight { get { return new Rectangle(Width - RBSize, Height - RBSize, RBSize, RBSize); } }
-
-
-        protected override void WndProc(ref Message message)
-        {
-            base.WndProc(ref message);
-
-            if (message.Msg == 0x84) // WM_NCHITTEST
-            {
-                var cursor = this.PointToClient(Cursor.Position);
-
-                if (TopLeft.Contains(cursor)) message.Result = (IntPtr)HTTOPLEFT;
-                else if (TopRight.Contains(cursor)) message.Result = (IntPtr)HTTOPRIGHT;
-                else if (BottomLeft.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMLEFT;
-                else if (BottomRight.Contains(cursor)) message.Result = (IntPtr)HTBOTTOMRIGHT;
-                else if (RTop.Contains(cursor)) message.Result = (IntPtr)HTTOP;
-                else if (RLeft.Contains(cursor)) message.Result = (IntPtr)HTLEFT;
-                else if (RRight.Contains(cursor)) message.Result = (IntPtr)HTRIGHT;
-                else if (RBottom.Contains(cursor)) message.Result = (IntPtr)HTBOTTOM;
-            }
-        }
-        #endregion
     }
 }

@@ -61,6 +61,7 @@
             this.setCurrentDirectoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.button2 = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.textBox1 = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.button3 = new System.Windows.Forms.Button();
             this.contextMenuStrip3 = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -70,7 +71,7 @@
             this.openContainingFolderToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.rTextBox1 = new System.Windows.Forms.RichTextBox();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.renameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.contextMenuStrip1.SuspendLayout();
             this.contextMenuStrip2.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -96,9 +97,10 @@
             this.toolStripSeparator3,
             this.topMostToolStripMenuItem,
             this.hideShowTaskbarIconToolStripMenuItem,
-            this.reloadToolStripMenuItem});
+            this.reloadToolStripMenuItem,
+            this.renameToolStripMenuItem});
             this.contextMenuStrip1.Name = "contextMenuStrip1";
-            this.contextMenuStrip1.Size = new System.Drawing.Size(250, 292);
+            this.contextMenuStrip1.Size = new System.Drawing.Size(250, 336);
             // 
             // formatToolStripMenuItem
             // 
@@ -351,6 +353,18 @@
             this.panel1.Size = new System.Drawing.Size(316, 32);
             this.panel1.TabIndex = 0;
             // 
+            // textBox1
+            // 
+            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
+            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
+            this.textBox1.Location = new System.Drawing.Point(40, 8);
+            this.textBox1.Multiline = true;
+            this.textBox1.Name = "textBox1";
+            this.textBox1.Size = new System.Drawing.Size(207, 18);
+            this.textBox1.TabIndex = 1;
+            // 
             // label1
             // 
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -388,28 +402,28 @@
             // newPasswordToolStripMenuItem
             // 
             this.newPasswordToolStripMenuItem.Name = "newPasswordToolStripMenuItem";
-            this.newPasswordToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.newPasswordToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.newPasswordToolStripMenuItem.Text = "New password...";
             this.newPasswordToolStripMenuItem.Click += new System.EventHandler(this.newPasswordToolStripMenuItem_Click);
             // 
             // deleteNoteToolStripMenuItem
             // 
             this.deleteNoteToolStripMenuItem.Name = "deleteNoteToolStripMenuItem";
-            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.deleteNoteToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.deleteNoteToolStripMenuItem.Text = "Delete Note";
             this.deleteNoteToolStripMenuItem.Click += new System.EventHandler(this.deleteNoteToolStripMenuItem_Click);
             // 
             // registerFileExtensionToolStripMenuItem
             // 
             this.registerFileExtensionToolStripMenuItem.Name = "registerFileExtensionToolStripMenuItem";
-            this.registerFileExtensionToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.registerFileExtensionToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.registerFileExtensionToolStripMenuItem.Text = "Register File Extension";
             this.registerFileExtensionToolStripMenuItem.Click += new System.EventHandler(this.registerFileExtensionToolStripMenuItem_Click);
             // 
             // openContainingFolderToolStripMenuItem
             // 
             this.openContainingFolderToolStripMenuItem.Name = "openContainingFolderToolStripMenuItem";
-            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(220, 22);
+            this.openContainingFolderToolStripMenuItem.Size = new System.Drawing.Size(201, 22);
             this.openContainingFolderToolStripMenuItem.Text = "Open Containing Folder";
             this.openContainingFolderToolStripMenuItem.Click += new System.EventHandler(this.openContainingFolderToolStripMenuItem_Click);
             // 
@@ -438,17 +452,13 @@
             this.panel2.Size = new System.Drawing.Size(316, 284);
             this.panel2.TabIndex = 2;
             // 
-            // textBox1
+            // renameToolStripMenuItem
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(24)))), ((int)(((byte)(24)))), ((int)(((byte)(24)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(128)))));
-            this.textBox1.Location = new System.Drawing.Point(40, 8);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(207, 18);
-            this.textBox1.TabIndex = 1;
+            this.renameToolStripMenuItem.Name = "renameToolStripMenuItem";
+            this.renameToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
+            this.renameToolStripMenuItem.Size = new System.Drawing.Size(249, 22);
+            this.renameToolStripMenuItem.Text = "Rename";
+            this.renameToolStripMenuItem.Click += new System.EventHandler(this.renameToolStripMenuItem_Click);
             // 
             // Form1
             // 
@@ -515,6 +525,7 @@
         private System.Windows.Forms.ToolStripMenuItem registerFileExtensionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openContainingFolderToolStripMenuItem;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.ToolStripMenuItem renameToolStripMenuItem;
     }
 }
 
