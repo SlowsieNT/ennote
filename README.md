@@ -4,10 +4,8 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Screenshot(s)
-<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/ennote.png"><br>
+Right click on RTextbox<br>
 <img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
-## Help?
-
 Button "+" may be right clicked to see options such as: `Open...` and `Set current directory`<br>
 <img alt="Plus button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/plusCtx.png"><br>
 Button "..." may be clicked, or right clicked to see options such as:<br>
