@@ -3,6 +3,9 @@
 ## This is free and unencumbered software released into the public domain.
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
+## Info
+Binaries may be updated, so check binary date/version.<br>
+
 ## Screenshot(s)
 Right click on RTextbox<br>
 <img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
