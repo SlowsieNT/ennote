@@ -57,19 +57,16 @@ namespace ennote
         bool PasswordArgSet=false;
         public Form1(string[] aArgs)
         {
-            //MessageBox.Show("pass1");
             DefaultPassword = NewPassword();
             Password = DefaultPassword;
-            if (aArgs.Length > 0)
-            {
-                var fi = new FileInfo(aArgs[0]);
-                FileName = fi.Name;
-            }
-            if (Directory.Exists(FileName)) {
-                UserDir = FileName;
-                FileName = GenerateFilename();
-            } else {
-                UserDir = Directory.GetCurrentDirectory();
+            UserDir = Directory.GetCurrentDirectory();
+            if (aArgs.Length > 0) {
+                if (Directory.Exists(aArgs[0])) {
+                    UserDir = aArgs[0];
+                    FileName = GenerateFilename();
+                    MessageBox.Show("cd=" + Directory.GetCurrentDirectory() +
+                    "\r\nud=" + UserDir);
+                }
             }
             if (aArgs.Length > 1) {
                 PasswordArgSet = true;
@@ -84,6 +81,7 @@ namespace ennote
             panel1.MouseDown += MoveShit;
             label1.MouseDown += MoveShit;
             button1.Click += delegate (object s, EventArgs e) {
+                UserDir = new DirectoryInfo(UserDir).FullName;
                 Process.Start(Application.ExecutablePath, '"' + UserDir + '"' + " " + Password);
             };
             button2.Click += delegate (object s, EventArgs e) { Application.Exit(); };
@@ -136,6 +134,9 @@ namespace ennote
                 Password = pwBox.ResponseValue;
             }
             if (feFlag) {
+                FileName = fi.Name;
+                if (fi.Directory.FullName != UserDir)
+                    UserDir = fi.Directory.FullName;
                 try {
                     ebuffer = File.ReadAllBytes(aFileName);
                 } catch {
@@ -314,7 +315,7 @@ namespace ennote
             var eep = Environment.ExpandEnvironmentVariables("%SystemRoot%\\explorer.exe");
             Process.Start(eep, '"' + UserDir + '"');
         }
-
+        #region border
         protected override void OnPaint(PaintEventArgs e) // you can safely omit this method if you want
         {
             e.Graphics.FillRectangle(Brushes.DimGray, RTop);
@@ -322,7 +323,7 @@ namespace ennote
             e.Graphics.FillRectangle(Brushes.DimGray, RRight);
             e.Graphics.FillRectangle(Brushes.DimGray, RBottom);
         }
-
+        
         private const int
             HTLEFT = 10,
             HTRIGHT = 11,
@@ -363,5 +364,6 @@ namespace ennote
                 else if (RBottom.Contains(cursor)) message.Result = (IntPtr)HTBOTTOM;
             }
         }
+        #endregion
     }
 }
