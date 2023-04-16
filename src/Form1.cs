@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,10 +27,10 @@ namespace ennote
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
-        long timestamp(long aAddVal = 0)
+        long timestamp(bool aMS = false, long aAddVal = 0)
         {
             long epochTicks = new DateTime(1970, 1, 1).Ticks;
-            long unixTime = ((DateTime.UtcNow.Ticks - epochTicks) / TimeSpan.TicksPerSecond);
+            long unixTime = ((DateTime.UtcNow.Ticks - epochTicks) / (aMS ? TimeSpan.TicksPerMillisecond : TimeSpan.TicksPerSecond));
             return unixTime + aAddVal;
         }
         string NewPassword()
@@ -76,8 +76,8 @@ namespace ennote
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
             this.SetStyle(ControlStyles.ResizeRedraw, true);
-            panel1.MouseDown += MoveShit;
-            label1.MouseDown += MoveShit;
+            panel1.MouseDown += MoveOnMouseDown;
+            label1.MouseDown += MoveOnMouseDown;
             button1.Click += delegate (object s, EventArgs e) {
                 UserDir = new DirectoryInfo(UserDir).FullName;
                 Process.Start(Application.ExecutablePath, '"' + UserDir + '"' + " " + Password);
@@ -89,14 +89,35 @@ namespace ennote
             rTextBox1.AllowDrop = true;
             // etc
             ReadNote(SaveFilename());
-            toolStripTextBox1.TextChanged += delegate (object s, EventArgs e) {
-                DeleteNote(true);
-                FileName = toolStripTextBox1.Text;
-                label1.Text = FileName;
-                SaveNote();
+            textBox1.KeyDown += delegate (object s, KeyEventArgs e) {
+                if (e.KeyCode == Keys.Enter) {
+                    DeleteNote(true);
+                    string nFname = textBox1.Text;
+                    if (nFname.ToLower().IndexOf(FileExt) < 0)
+                        if (DialogResult.OK == MessageBox.Show("Missing file extension, add it?", "Missing file extension", MessageBoxButtons.OKCancel))
+                            nFname += FileExt;
+                    FileName = nFname;
+                    label1.Text = FileName;
+                    SaveNote();
+                    textBox1.Hide();
+                }
+            };
+            textBox1.Hide();
+            long lastclickdate = 0;
+            label1.MouseDown += delegate (object s, MouseEventArgs e) {
+                if (lastclickdate > 0 && timestamp(true, -lastclickdate) < 235) {
+                    lastclickdate = 0;
+                    int fnePos = FileName.LastIndexOf(".");
+                    textBox1.Text = FileName;
+                    textBox1.Show();
+                    textBox1.Focus();
+                    if (fnePos > 0)
+                        textBox1.Select(0, fnePos);
+                }
+                lastclickdate = timestamp(true);
             };
         }
-        void MoveShit(object sender, MouseEventArgs e)
+        void MoveOnMouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -149,7 +170,6 @@ namespace ennote
                 }
             }
             if (FileName == "") FileName = GenerateFilename();
-            toolStripTextBox1.Text = FileName;
             label1.Text = FileName;
         }
         private void Form1_Load(object sender, EventArgs e)
