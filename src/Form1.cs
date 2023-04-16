@@ -64,8 +64,6 @@ namespace ennote
                 if (Directory.Exists(aArgs[0])) {
                     UserDir = aArgs[0];
                     FileName = GenerateFilename();
-                    MessageBox.Show("cd=" + Directory.GetCurrentDirectory() +
-                    "\r\nud=" + UserDir);
                 }
             }
             if (aArgs.Length > 1) {
