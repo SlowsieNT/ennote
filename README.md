@@ -4,6 +4,7 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Info
+App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
 
 ## Screenshot(s)
