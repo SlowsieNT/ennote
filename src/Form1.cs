@@ -92,10 +92,10 @@ namespace ennote
             tmpItems.Add(string.Format("{0:X3}", rng.Next(0xfff)));
             return Strings.Join(tmpItems.ToArray(),"--");
         }
+        string htimestamp() { return Convert.ToString(timestamp(), 16); }
         string GenerateFilename()
         {
-            return "note_" +
-                Convert.ToString(timestamp(), 16) + FileExt;
+            return "note_" + htimestamp() + FileExt;
         }
         void DeleteNote(bool aNoExit=false)
         {
@@ -105,16 +105,22 @@ namespace ennote
             if (!aNoExit) Close();
         }
         Random rng = new Random();
-        bool PasswordArgSet=false;
+        bool PasswordArgSet=false, CanAutoSave=false;
         public Form1(string[] aArgs)
         {
             DefaultPassword = NewPassword();
             Password = DefaultPassword;
             UserDir = Directory.GetCurrentDirectory();
+            FileInfo fi = null;
             if (aArgs.Length > 0) {
-                if (Directory.Exists(aArgs[0])) {
-                    UserDir = aArgs[0];
+                fi = new FileInfo(aArgs[0]);
+                if (fi.Exists) {
+                    FileName = fi.Name;
+                    UserDir = fi.Directory.FullName;
+                }
+                else if (Directory.Exists(aArgs[0])) {
                     FileName = GenerateFilename();
+                    UserDir = aArgs[0];
                 }
             }
             if (aArgs.Length > 1) {
@@ -186,6 +192,7 @@ namespace ennote
         }
         void SaveNote()
         {
+            if (!CanAutoSave) return;
             var sfn = SaveFilename();
             TrySaveFile(sfn);
         }
@@ -198,6 +205,7 @@ namespace ennote
             } catch { }
         }
         void ReadNote(string aFileName) {
+            CanAutoSave = false;
             var fi = new FileInfo(aFileName);
             var feFlag = File.Exists(aFileName);
             byte[] ebuffer = new byte[] { };
@@ -207,10 +215,10 @@ namespace ennote
                 pwBox.ShowDialog();
                 Password = pwBox.ResponseValue;
             }
+            if (fi.Directory.FullName != UserDir)
+                UserDir = fi.Directory.FullName;
             if (feFlag) {
                 FileName = fi.Name;
-                if (fi.Directory.FullName != UserDir)
-                    UserDir = fi.Directory.FullName;
                 try {
                     ebuffer = File.ReadAllBytes(aFileName);
                 } catch {
@@ -220,12 +228,27 @@ namespace ennote
                 try {
                     rTextBox1.Rtf = AES256.DecryptBytes(ebuffer, Password);
                 } catch {
-                    MessageBox.Show("Failed to decrypt file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    FileName = GenerateFilename();
+                    var dr = MessageBox.Show("Failed to decrypt file.\r\nRead as text?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                    try {
+                        if (dr == DialogResult.Yes) {
+                            rTextBox1.Text = File.ReadAllText(aFileName);
+                            CanAutoSave = true;
+                            var cfn = fi.Name;
+                            if (fi.Extension.Length > 0) {
+                                cfn = fi.Name.Substring(0, cfn.Length - fi.Extension.Length);
+                            }
+                            FileName = cfn + "-" + htimestamp() + FileExt;
+                            SaveNote();
+                        }
+                    } catch {
+                        MessageBox.Show("Failed to read file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FileName = GenerateFilename();
+                    }
                 }
             }
             if (FileName == "") FileName = GenerateFilename();
             label1.Text = FileName;
+            CanAutoSave = true;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
