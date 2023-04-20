@@ -13,7 +13,7 @@ I don't reserve any rights to source code, do as you will with it.<br>
 
 ## Tips
 You can rename note by `Ctrl+R` or by double clicking title of the note.<br>
-You can save note as plain text by `Ctrl+Shift+S` and selecting "Text Documents" option, it should ask whether you want it to be saved as plain text.<br>
+You can save note as plain text by `Ctrl+Shift+S` and selecting "Text Documents" option.<br>
 You can open plain text by `Ctrl+O`, and after decryption fails, it will ask whether you want it to load as plain text.<br>
 
 ## Screenshot(s)
