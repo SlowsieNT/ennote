@@ -8,8 +8,8 @@ App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
 
 ## Why it exists?
-It exists just as (ego-free) project, meaning it is not for sake of attribution or similar.<br>
-I don't reserve any rights to source code, do as you will with it.<br>
+It was made to be unrestricted in all possible ways, especially in terms of copyright.<br>
+Meaning I do not reserve any rights to source code, do as you will with it.<br>
 
 ## Tips
 You can rename note by `Ctrl+R` or by double clicking title of the note.<br>
