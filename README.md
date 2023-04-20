@@ -8,7 +8,7 @@ App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
 
 ## Why it exists?
-It's just selfless (ego-free) project.<br>
+It exists just as (ego-free) project, meaning it is not for sake of attribution or similar.<br>
 I don't reserve any rights to source code, do as you will with it.<br>
 
 ## Tips
