@@ -341,6 +341,15 @@ namespace ennote
             }
         }
 
+        private void backgroundToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var cd = new ColorDialog();
+            cd.Color = rTextBox1.SelectionBackColor;
+            if (cd.ShowDialog() == DialogResult.OK) {
+                rTextBox1.SelectionBackColor = cd.Color;
+            }
+        }
+
         private void wordWrapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             rTextBox1.WordWrap = !rTextBox1.WordWrap;
