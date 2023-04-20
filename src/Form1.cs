@@ -11,6 +11,7 @@ using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml.Linq;
 
 namespace ennote
 {
@@ -147,6 +148,10 @@ namespace ennote
             // etc
             ReadNote(SaveFilename());
             textBox1.KeyDown += delegate (object s, KeyEventArgs e) {
+                if (e.KeyCode == Keys.Escape) {
+                    textBox1.Hide();
+                    return;
+                }
                 if (e.KeyCode == Keys.Enter) {
                     DeleteNote(true);
                     string nFname = textBox1.Text;
@@ -196,10 +201,11 @@ namespace ennote
             var sfn = SaveFilename();
             TrySaveFile(sfn);
         }
-        void TrySaveFile(string aFileName) {
-            try
-            {
-                File.WriteAllBytes(aFileName, AES256.EncryptString(rTextBox1.Rtf, Password));
+        void TrySaveFile(string aFileName, bool aAsPlain=false) {
+            try {
+                if (aAsPlain)
+                    File.WriteAllText(aFileName, rTextBox1.Text);
+                else File.WriteAllBytes(aFileName, AES256.EncryptString(rTextBox1.Rtf, Password));
                 var fi = new FileInfo(aFileName);
                 FileName = fi.Name;
             } catch { }
@@ -305,12 +311,16 @@ namespace ennote
         {
             var sfd = new SaveFileDialog();
             sfd.InitialDirectory = UserDir;
-            sfd.Filter = "Encrypted Note|*"+FileExt+"|All Files|*.*";
+            sfd.Filter = "Encrypted Note|*"+FileExt+ "|Text Documents|*.txt|All Files|*.*";
             var dr = sfd.ShowDialog();
             if (dr == DialogResult.OK) {
                 var fi = new FileInfo(sfd.FileName);
+                bool asPlain = false;
+                if (".txt" == fi.Extension) {
+                    asPlain = DialogResult.OK == MessageBox.Show("Save as plain text; not encrypted?", "Save As...", MessageBoxButtons.OKCancel);
+                }
                 UserDir = fi.Directory.FullName;
-                TrySaveFile(sfd.FileName);
+                TrySaveFile(sfd.FileName, asPlain);
             }
         }
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
