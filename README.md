@@ -11,6 +11,11 @@ Binaries may be updated, so check binary date/version.<br>
 It's just selfless (ego-free) project.<br>
 I don't reserve any rights to source code, do as you will with it.<br>
 
+## Tips
+You can rename note by `Ctrl+R` or by double clicking title of the note.<br>
+You can save note as plain text by `Ctrl+Shift+S` and selecting "Text Documents" option, it should ask whether you want it to be saved as plain text.<br>
+You can open plain text by `Ctrl+O`, and after decryption fails, it will ask whether you want it to load as plain text.<br>
+
 ## Screenshot(s)
 Right click on RTextbox<br>
 <img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
