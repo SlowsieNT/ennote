@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,6 +12,7 @@ using System.Security.AccessControl;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ennote
 {
@@ -137,6 +138,7 @@ namespace ennote
                 swPositionSet = true;
             }
             InitializeComponent();
+            ActiveControl = rTextBox1;
             try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); }
             catch { }
             this.FormBorderStyle = FormBorderStyle.None;
@@ -277,6 +279,7 @@ namespace ennote
         {
             if (swPositionSet) {
                 Location = new Point(swX, swY);
+                rTextBox1.Focus();
             }
         }
 
