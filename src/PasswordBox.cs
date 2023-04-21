@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -55,6 +55,7 @@ namespace ennote
         }
         private void PasswordBox_Load(object sender, EventArgs e)
         {
+            Text = "Enter Password";
             textBox1.Select();
             try {
                 Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
