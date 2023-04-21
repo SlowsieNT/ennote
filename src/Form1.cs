@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -261,6 +261,7 @@ namespace ennote
             if (FileName == "") FileName = GenerateFilename();
             label1.Text = FileName;
             CanAutoSave = true;
+            Text = FileName;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
