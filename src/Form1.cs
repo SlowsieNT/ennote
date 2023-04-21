@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -106,7 +106,8 @@ namespace ennote
             if (!aNoExit) Close();
         }
         Random rng = new Random();
-        bool PasswordArgSet=false, CanAutoSave=false;
+        bool PasswordArgSet=false, CanAutoSave=false, swPositionSet=false;
+        int swX=0, swY=0;
         public Form1(string[] aArgs)
         {
             DefaultPassword = NewPassword();
@@ -125,8 +126,15 @@ namespace ennote
                 }
             }
             if (aArgs.Length > 1) {
-                PasswordArgSet = true;
                 Password = aArgs[1];
+                PasswordArgSet = true;
+            }
+            if (aArgs.Length > 2) {
+                var wpos = aArgs[2].Split('x');
+                if (wpos.Length < 1) return;
+                int.TryParse(wpos[0], out swX);
+                int.TryParse(wpos[1], out swY);
+                swPositionSet = true;
             }
             InitializeComponent();
             try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); }
@@ -138,7 +146,8 @@ namespace ennote
             label1.MouseDown += MoveOnMouseDown;
             button1.Click += delegate (object s, EventArgs e) {
                 UserDir = new DirectoryInfo(UserDir).FullName;
-                Process.Start(Application.ExecutablePath, '"' + UserDir + '"' + " " + Password);
+                var strwPos = (Left + 32) + "x" + (Top + 32);
+                Process.Start(Application.ExecutablePath, '"' + UserDir + '"' + " " + Password + " " + strwPos);
             };
             button2.Click += delegate (object s, EventArgs e) { Application.Exit(); };
             rTextBox1.TextChanged += delegate (object s, EventArgs e) {
@@ -266,7 +275,9 @@ namespace ennote
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            
+            if (swPositionSet) {
+                Location = new Point(swX, swY);
+            }
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
