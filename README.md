@@ -39,7 +39,7 @@ or<br>
 or EVEN:<br>
 `progName <FolderName>` - to set as working directory.<br>
 to set window position:<br>
-`progName <FileName> <Password> <X>x<Y>` to open file with password.<br>
+`progName <FolderName/FileName> <Password> <X>x<Y>` to open file with password.<br>
 - Command example:
   - `progName note.rte password123 100x100`
 
