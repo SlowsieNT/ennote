@@ -4,8 +4,8 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Requirements
-.NET 3.5<br>
-.NET 3.5 for Windows XP (<a target="_blank" rel="noreferrer" href="https://www.microsoft.com/en-us/download/details.aspx?id=25150">link</a>)<br>
+.NET 3.5
+(dotnet35 for Windows XP: <a target="_blank" rel="noreferrer" href="https://www.microsoft.com/en-us/download/details.aspx?id=25150">Link</a>)<br>
 
 ## Info
 App uses AES encryption.<br>
