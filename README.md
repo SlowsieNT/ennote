@@ -5,7 +5,7 @@
 
 ## Requirements
 .NET 3.5<br>
-(dotnet35 for Windows XP: <a target="_blank" rel="noreferrer" href="https://www.microsoft.com/en-us/download/details.aspx?id=25150">Link</a>)<br>
+(dotnet35 for Windows XP: [Download Link](https://www.microsoft.com/en-us/download/details.aspx?id=25150))<br>
 
 ## Info
 App uses AES encryption.<br>
