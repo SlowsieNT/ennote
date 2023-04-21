@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -395,6 +395,12 @@ namespace ennote
             ToggleFontStyle(FontStyle.Bold);
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            contextMenuStrip3.Show(new Point(button3.Location.X +4 + Location.X, 32 + button3.Location.Y + Location.Y));
+
+        }
+
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToggleFontStyle(FontStyle.Italic);
@@ -421,12 +427,6 @@ namespace ennote
         private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             openToolStripMenuItem_Click(sender, e);
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            var mea = (MouseEventArgs)e;
-            contextMenuStrip3.Show(new Point(button3.Location.X + Location.X, 32 + button3.Location.Y + Location.Y));
         }
 
         private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
