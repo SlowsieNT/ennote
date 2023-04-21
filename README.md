@@ -38,6 +38,10 @@ or<br>
 `progName <FileName>` - to open file without password.<br>
 or EVEN:<br>
 `progName <FolderName>` - to set as working directory.<br>
+to set window position:<br>
+`progName <FileName> <Password> <X>x<Y>` to open file with password.<br>
+- command example:
+  - `progName note.rte password123 100x100`
 
 ## License
 All of files are **Unlicense**d. No rights are reserved.
