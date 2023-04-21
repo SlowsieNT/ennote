@@ -12,7 +12,7 @@ Binaries may be updated, so check binary date/version.<br>
 (dotnet35 for Windows XP: [Download Link](https://www.microsoft.com/en-us/download/details.aspx?id=25150))<br>
 (RAM usage is around 8MB)<br>
 
-## Why reinvent the 'wheel'?
+## Why reinvent the 'wheel?'
 It was made to be unrestricted in all possible ways, especially in terms of copyright.<br>
 Meaning I do not reserve any rights to source code, do as you will with it.<br>
 
