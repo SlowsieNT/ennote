@@ -17,8 +17,9 @@ You can save note as plain text by `Ctrl+Shift+S` and selecting "Text Documents"
 You can open plain text by `Ctrl+O`, and after decryption fails, it will ask whether you want it to load as plain text.<br>
 
 ## Screenshot(s)
+<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/app.png"><br>
 Right click on RTextbox<br>
-<img alt="App screenshot" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
+<img alt="RTextbox context menu" src="https://github.com/SlowsieNT/ennote/raw/main/etc/rtCtx.png"><br>
 Button "+" may be right clicked to see options such as:<br>
 `Open...` and `Set current directory`<br>
 <img alt="Plus button context menu screenshot" src="https://raw.githubusercontent.com/SlowsieNT/ennote/main/etc/plusCtx.png"><br>
