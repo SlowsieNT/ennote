@@ -173,6 +173,12 @@ namespace ennote
                 }
                 lastclickdate = timestamp(true);
             };
+            contextMenuStrip1.ShowImageMargin = false;
+            contextMenuStrip2.ShowImageMargin = false;
+            contextMenuStrip3.ShowImageMargin = false;
+            contextMenuStrip1.Renderer = new ToolStripDarkRenderer();
+            contextMenuStrip2.Renderer = new ToolStripDarkRenderer();
+            contextMenuStrip3.Renderer = new ToolStripDarkRenderer();
         }
         void ShowRename()
         {

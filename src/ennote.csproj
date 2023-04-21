@@ -48,6 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="crypt.cs" />
+    <Compile Include="ToolStripDarkRenderer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
