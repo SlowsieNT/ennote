@@ -4,7 +4,7 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Requirements
-.NET 3.5
+.NET 3.5<br>
 (dotnet35 for Windows XP: <a target="_blank" rel="noreferrer" href="https://www.microsoft.com/en-us/download/details.aspx?id=25150">Link</a>)<br>
 
 ## Info
