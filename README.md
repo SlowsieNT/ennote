@@ -13,8 +13,7 @@ Windows XP (*minimum*)<br>
 (RAM usage is around 8MB)<br>
 
 ## Why reinvent the 'wheel?'
-It was made to be unrestricted in all possible ways, especially in terms of copyright.<br>
-Meaning I do not reserve any rights to source code, do as you will with it.<br>
+The objective was to make it uncopyrighted; meaning I do not claim any rights to the source code.<br>
 
 ## Tips
 You can rename note by `Ctrl+R` or by double clicking title of the note.<br>
