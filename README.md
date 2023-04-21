@@ -3,6 +3,10 @@
 ## This is free and unencumbered software released into the public domain.
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
+## Requirements
+.NET 3.5<br>
+(Works on Windows XP)<br>
+
 ## Info
 App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
