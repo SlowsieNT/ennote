@@ -8,7 +8,7 @@ App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
 
 ## Requirements
-Windows XP, **OR** newer (windows).<br>
+Windows XP (minimum)<br>
 .NET 3.5; for Windows XP: [Download Link](https://www.microsoft.com/en-us/download/details.aspx?id=25150)<br>
 (RAM usage is around 8MB)<br>
 
