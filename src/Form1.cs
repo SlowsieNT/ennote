@@ -214,6 +214,7 @@ namespace ennote
                 else File.WriteAllBytes(aFileName, AES256.EncryptString(rTextBox1.Rtf, Password));
                 var fi = new FileInfo(aFileName);
                 FileName = fi.Name;
+                Text = FileName;
             } catch { }
         }
         void ReadNote(string aFileName) {
