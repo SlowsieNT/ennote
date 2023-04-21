@@ -4,9 +4,9 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Requirements
-(RAM usage is around 8MB)<br>
 .NET 3.5<br>
 (dotnet35 for Windows XP: [Download Link](https://www.microsoft.com/en-us/download/details.aspx?id=25150))<br>
+(RAM usage is around 8MB)<br>
 
 ## Info
 App uses AES encryption.<br>
