@@ -5,7 +5,7 @@
 
 ## Requirements
 .NET 3.5<br>
-(Works on Windows XP)<br>
+.NET 3.5 for Windows XP (<a target="_blank" rel="noreferrer" href="https://www.microsoft.com/en-us/download/details.aspx?id=25150">link</a>)<br>
 
 ## Info
 App uses AES encryption.<br>
