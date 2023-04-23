@@ -109,6 +109,7 @@ namespace ennote
         Random rng = new Random();
         bool PasswordArgSet=false, CanAutoSave=false, swPositionSet=false;
         int swX=0, swY=0;
+        NotifyIcon ni = new NotifyIcon();
         public Form1(string[] aArgs)
         {
             DefaultPassword = NewPassword();
@@ -139,7 +140,10 @@ namespace ennote
             }
             InitializeComponent();
             ActiveControl = rTextBox1;
-            try { Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath); }
+            try {
+                Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
+                ni.Icon = Icon;
+            }
             catch { }
             this.FormBorderStyle = FormBorderStyle.None;
             this.DoubleBuffered = true;
@@ -190,7 +194,16 @@ namespace ennote
             contextMenuStrip1.Renderer = new ToolStripDarkRenderer();
             contextMenuStrip2.Renderer = new ToolStripDarkRenderer();
             contextMenuStrip3.Renderer = new ToolStripDarkRenderer();
+            //etc
+            ni.DoubleClick += Ni_DoubleClick;
         }
+
+        private void Ni_DoubleClick(object sender, EventArgs e)
+        {
+            ShowInTaskbar = true;
+            Show();
+        }
+
         void ShowRename()
         {
             int fnePos = FileName.LastIndexOf(".");
@@ -225,7 +238,7 @@ namespace ennote
                 else File.WriteAllBytes(aFileName, AES256.EncryptString(rTextBox1.Rtf, Password));
                 var fi = new FileInfo(aFileName);
                 FileName = fi.Name;
-                Text = FileName;
+                ni.Text = Text = FileName;
             } catch { }
         }
         void ReadNote(string aFileName) {
@@ -273,7 +286,7 @@ namespace ennote
             if (FileName == "") FileName = GenerateFilename();
             label1.Text = FileName;
             CanAutoSave = true;
-            Text = FileName;
+            ni.Text = Text = FileName;
         }
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -317,33 +330,6 @@ namespace ennote
         {
             TopMost = !TopMost;
             topMostToolStripMenuItem.Checked = TopMost;
-        }
-
-        private void openToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var ofd = new OpenFileDialog();
-            ofd.InitialDirectory = UserDir;
-            ofd.Filter = "Encrypted Note|*" + FileExt + "|All Files|*.*";
-            var dr = ofd.ShowDialog();
-            if (dr == DialogResult.OK)
-                ReadNote(ofd.FileName);
-        }
-
-        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            var sfd = new SaveFileDialog();
-            sfd.InitialDirectory = UserDir;
-            sfd.Filter = "Encrypted Note|*"+FileExt+ "|Text Documents|*.txt|All Files|*.*";
-            var dr = sfd.ShowDialog();
-            if (dr == DialogResult.OK) {
-                var fi = new FileInfo(sfd.FileName);
-                bool asPlain = false;
-                if (".txt" == fi.Extension) {
-                    asPlain = DialogResult.OK == MessageBox.Show("Save as plain text; not encrypted?", "Save As...", MessageBoxButtons.OKCancel);
-                }
-                UserDir = fi.Directory.FullName;
-                TrySaveFile(sfd.FileName, asPlain);
-            }
         }
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -401,6 +387,44 @@ namespace ennote
 
         }
 
+        private void openToolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog();
+            ofd.InitialDirectory = UserDir;
+            ofd.Filter = "Encrypted Note|*" + FileExt + "|All Files|*.*";
+            var dr = ofd.ShowDialog();
+            if (dr == DialogResult.OK)
+                ReadNote(ofd.FileName);
+        }
+
+        private void saveAsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            var sfd = new SaveFileDialog();
+            sfd.InitialDirectory = UserDir;
+            sfd.Filter = "Encrypted Note|*"+FileExt+ "|Text Documents|*.txt|All Files|*.*";
+            var dr = sfd.ShowDialog();
+            if (dr == DialogResult.OK) {
+                var fi = new FileInfo(sfd.FileName);
+                bool asPlain = false;
+                if (".txt" == fi.Extension) {
+                    asPlain = DialogResult.OK == MessageBox.Show("Save as plain text; not encrypted?", "Save As...", MessageBoxButtons.OKCancel);
+                }
+                UserDir = fi.Directory.FullName;
+                TrySaveFile(sfd.FileName, asPlain);
+            }
+        }
+
+        private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            saveAsToolStripMenuItem1_Click(sender, e);
+        }
+
+        
+        private void showTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ni.Visible = !ni.Visible;
+        }
+
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToggleFontStyle(FontStyle.Italic);
@@ -426,7 +450,7 @@ namespace ennote
 
         private void openToolStripMenuItem1_Click(object sender, EventArgs e)
         {
-            openToolStripMenuItem_Click(sender, e);
+            openToolStripMenuItem2_Click(sender, e);
         }
 
         private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
