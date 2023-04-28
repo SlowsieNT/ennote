@@ -1,4 +1,4 @@
-﻿using Microsoft.VisualBasic;
+using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -367,11 +367,12 @@ namespace ennote
                 FileName = fi.Name;
                 try {
                     ebuffer = File.ReadAllBytes(aFileName);
-                    JReminderSettings = jss.Deserialize<object[]>(File.ReadAllText(ReminderFilename()));
                 } catch {
                     MessageBox.Show("Failed to read file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     FileName = GenerateFilename();
                 }
+                try { JReminderSettings = jss.Deserialize<object[]>(File.ReadAllText(ReminderFilename())); }
+                catch { }
                 try {
                     rTextBox1.Rtf = AES256.DecryptBytes(ebuffer, Password);
                 } catch {
