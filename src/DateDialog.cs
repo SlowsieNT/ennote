@@ -164,6 +164,7 @@ namespace ennote
             if (checkBox9.Checked)
                 Height = 128;
             else Height = OrigHeight;
+            Form1.JReminderSettings[0] = checkBox9.Checked ? 2 : 0;
         }
 
         private void checkBox8_CheckedChanged(object sender, EventArgs e)
@@ -171,6 +172,7 @@ namespace ennote
             checkBox9.Checked = false;
             foreach (var cb in DayCheckboxes)
                 if (checkBox9.Checked) cb.Hide(); else cb.Show();
+            Form1.JReminderSettings[0] = checkBox8.Checked ? 1 : 0;
         }
 
         private void button5_Click(object sender, EventArgs e)

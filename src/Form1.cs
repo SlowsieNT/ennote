@@ -1,4 +1,4 @@
-using Microsoft.VisualBasic;
+﻿using Microsoft.VisualBasic;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -525,10 +525,12 @@ namespace ennote
 
         private void setReminderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            timer1.Enabled = false;
             var dd = new DateDialog("Pick date");
             dd.ShowDialog();
             if (0 == dd.ResponseButton)
                 SaveNote();
+            timer1.Enabled = true;
         }
 
         private void showTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
