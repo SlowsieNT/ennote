@@ -7,9 +7,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Runtime.InteropServices;
 using System.Security.AccessControl;
 using System.Text;
+using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
@@ -23,6 +25,14 @@ namespace ennote
         string DefaultPassword = "";
         string FileName = "";
         string FileExt = ".rte";
+        // System.Web.Extensions.dll
+        public static System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
+        public static object[] JReminderSettings = new object[] {
+            0, // on/off [0]
+            0,0,0,0,0,0,0, // days [1...7]
+            0,0,0 // time [8...10]
+        };
+
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -103,6 +113,7 @@ namespace ennote
         {
             try {
                 File.Delete(SaveFilename());
+                File.Delete(ReminderFilename());
             } catch { }
             if (!aNoExit) Close();
         }
@@ -110,6 +121,11 @@ namespace ennote
         bool PasswordArgSet=false, CanAutoSave=false, swPositionSet=false;
         int swX=0, swY=0;
         NotifyIcon ni = new NotifyIcon();
+        bool m_FireReminder = false;
+        int m_ShakesDuration = 5;
+        int m_ShakeArea = 24;
+        long m_ReminderEpoch = 0L;
+        long m_ReminderLastEpoch = 0L;
         public Form1(string[] aArgs)
         {
             DefaultPassword = NewPassword();
@@ -160,6 +176,7 @@ namespace ennote
                 SaveNote();
             };
             rTextBox1.AllowDrop = true;
+            Move += Form1_Move;
             // etc
             ReadNote(SaveFilename());
             textBox1.KeyDown += delegate (object s, KeyEventArgs e) {
@@ -197,7 +214,92 @@ namespace ennote
             //etc
             ni.DoubleClick += Ni_DoubleClick;
         }
-
+        int FormX, FormY;
+        private void Form1_Move(object sender, EventArgs e) {
+            if (!m_FireReminder) {
+                FormX = Left;
+                FormY = Top;
+            } else {
+                var deltaX = Math.Abs((FormX) - Left);
+                var deltaY = Math.Abs((FormY) - Top);
+                var maxDelta = 1 + m_ShakeArea * 2;
+                if (deltaX > maxDelta || deltaY > maxDelta) {
+                    StopReminder();
+                }
+            }
+        }
+        private void Form1_Load(object sender, EventArgs e) {
+            if (swPositionSet) {
+                Location = new Point(swX, swY);
+                rTextBox1.Focus();
+            }
+        }
+        void StopReminder() {
+            Top = FormY;
+            Left = FormX;
+            m_FireReminder = false;
+            m_ReminderLastEpoch = timestamp();
+        }
+        private void timer1_Tick(object sender, EventArgs e)
+        {
+            var reminderType = (int)JReminderSettings[0];
+            var dn = DateTime.Now;
+            var reminderTime = new int[] {
+                (int)JReminderSettings[8],
+                (int)JReminderSettings[9],
+                (int)JReminderSettings[10]
+            };
+            if (2 == reminderType) {
+                var timeSecs = reminderTime[0]*3600 + reminderTime[1]*60 + reminderTime[2];
+                if (0 == m_ReminderLastEpoch) {
+                    m_ReminderLastEpoch = timestamp();
+                }
+                if (!m_FireReminder && timeSecs < timestamp() - m_ReminderLastEpoch) {
+                    m_FireReminder = true;
+                    m_ReminderEpoch = timestamp();
+                }
+            } else if (1 == reminderType) {
+                var useDayed = false;
+                var days = new int[] {
+                    (int)JReminderSettings[1],
+                    (int)JReminderSettings[2],
+                    (int)JReminderSettings[3],
+                    (int)JReminderSettings[4],
+                    (int)JReminderSettings[5],
+                    (int)JReminderSettings[6],
+                    (int)JReminderSettings[7]
+                };
+                for (var i = 0; i < days.Length; i++)
+                    if (days[i] == 1) {
+                        useDayed = true;
+                        break;
+                    }
+                // days [1...7]
+                // time [8...10]
+                if (reminderTime[0] == dn.Hour && reminderTime[1] == dn.Minute && reminderTime[2] == dn.Second) {
+                    if (useDayed) {
+                        if (1 == days[(int)dn.DayOfWeek]) {
+                            m_FireReminder = true;
+                            m_ReminderEpoch = timestamp();
+                        }
+                    } else {
+                        m_FireReminder = true;
+                        m_ReminderEpoch = timestamp();
+                    }
+                }
+            }
+            if (m_FireReminder) {
+                if (timestamp() - m_ReminderEpoch >= m_ShakesDuration) {
+                    StopReminder();
+                } else {
+                    Show();
+                    Activate();
+                    Top = FormY + rng.Next(0, m_ShakeArea);
+                    Left = FormX + rng.Next(0, m_ShakeArea);
+                }
+            }
+        }
+        
         private void Ni_DoubleClick(object sender, EventArgs e)
         {
             ShowInTaskbar = true;
@@ -221,6 +323,10 @@ namespace ennote
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
+        string ReminderFilename()
+        {
+            return SaveFilename() + ".json";
+        }
         string SaveFilename()
         {
             return UserDir + "/" + FileName;
@@ -239,6 +345,9 @@ namespace ennote
                 var fi = new FileInfo(aFileName);
                 FileName = fi.Name;
                 ni.Text = Text = FileName;
+                File.WriteAllText(ReminderFilename(),
+                    jss.Serialize(JReminderSettings)
+                );
             } catch { }
         }
         void ReadNote(string aFileName) {
@@ -258,6 +367,7 @@ namespace ennote
                 FileName = fi.Name;
                 try {
                     ebuffer = File.ReadAllBytes(aFileName);
+                    JReminderSettings = jss.Deserialize<object[]>(File.ReadAllText(ReminderFilename()));
                 } catch {
                     MessageBox.Show("Failed to read file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     FileName = GenerateFilename();
@@ -287,13 +397,6 @@ namespace ennote
             label1.Text = FileName;
             CanAutoSave = true;
             ni.Text = Text = FileName;
-        }
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            if (swPositionSet) {
-                Location = new Point(swX, swY);
-                rTextBox1.Focus();
-            }
         }
 
         private void reloadToolStripMenuItem_Click(object sender, EventArgs e)
@@ -419,17 +522,22 @@ namespace ennote
             saveAsToolStripMenuItem1_Click(sender, e);
         }
 
-        
+        private void setReminderToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var dd = new DateDialog("Pick date");
+            dd.ShowDialog();
+            if (0 == dd.ResponseButton)
+                SaveNote();
+        }
+
         private void showTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ni.Visible = !ni.Visible;
         }
-
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToggleFontStyle(FontStyle.Italic);
         }
-
         private void underlineToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ToggleFontStyle(FontStyle.Underline);

@@ -58,6 +58,7 @@
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
@@ -68,6 +69,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="crypt.cs" />
+    <Compile Include="DateDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DateDialog.Designer.cs">
+      <DependentUpon>DateDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="ToolStripDarkRenderer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
@@ -86,6 +93,9 @@
     <Compile Include="utils.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DateDialog.resx">
+      <DependentUpon>DateDialog.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PasswordBox.resx">
       <DependentUpon>PasswordBox.cs</DependentUpon>
