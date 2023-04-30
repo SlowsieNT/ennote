@@ -26,7 +26,8 @@ namespace ennote
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
         public System.Windows.Forms.CheckBox[] DayCheckboxes = null;
-        int OrigHeight = 0;
+        int OrigHeight = 0, NoDaysHeight = 154;
+        bool UseWeekdays = true;
         public DateDialog(string aTitle)
         {
             InitializeComponent();
@@ -49,21 +50,22 @@ namespace ennote
                 checkBox5, checkBox6, checkBox7
             };
             var jrs = Form1.JReminderSettings;
+            UseWeekdays = (int)jrs[0] == 1;
             // ui rendering
             for (int i = 0; i < DayCheckboxes.Length; i++) {
-                DayCheckboxes[i].Checked = 1 == (int)jrs[1 + i];
+                DayCheckboxes[i].Checked = 1 == (int)jrs[i + Form1.JReminderDaysOffset];
             }
-            // every/days
-            checkBox8.Checked = 1 == (int)jrs[0];
-            checkBox9.Checked = 2 == (int)jrs[0];
-            // etc
-            textBox1.Text = int.Parse("" + jrs[8]).ToString("00");
-            textBox2.Text = int.Parse("" + jrs[9]).ToString("00");
-            textBox3.Text = int.Parse("" + jrs[10]).ToString("00");
-            // time:
-            if (int.TryParse(textBox1.Text.Trim(), out int x)) jrs[8] = x;
-            if (int.TryParse(textBox2.Text.Trim(), out int y)) jrs[9] = y;
-            if (int.TryParse(textBox3.Text.Trim(), out int z)) jrs[10] = z;
+            // weekly/every/once
+            radioButton1.Checked = 1 == (int)jrs[0];
+            radioButton2.Checked = 2 == (int)jrs[0];
+            radioButton3.Checked = 3 == (int)jrs[0];
+            // hh:mm:ss
+            textBox1.Text = int.Parse("" + jrs[0 + Form1.JReminderTimeOffset]).ToString("00");
+            textBox2.Text = int.Parse("" + jrs[1 + Form1.JReminderTimeOffset]).ToString("00");
+            textBox3.Text = int.Parse("" + jrs[2 + Form1.JReminderTimeOffset]).ToString("00");
+            // shake duration
+            textBox4.Text = "" + jrs[0 + Form1.JReminderShakeOffset];
+            textBox5.Text = "" + jrs[1 + Form1.JReminderShakeOffset];
         }
 
         private void DateDialog_FormClosing(object sender, FormClosingEventArgs e)
@@ -82,7 +84,6 @@ namespace ennote
         }
         private void DateDialog_Load(object sender, EventArgs e)
         {
-            //textBox1.Select();
             try {
                 Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             } catch { }
@@ -96,7 +97,7 @@ namespace ennote
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
             if (int.TryParse(textBox1.Text, out int x))
-                if (x > 23 && !checkBox9.Checked)
+                if (x > 23 && UseWeekdays)
                     textBox1.Text = "00";
                 else { }
             else textBox1.Text = "00";
@@ -125,20 +126,22 @@ namespace ennote
             ResponseButton = 0;
             var jrs = Form1.JReminderSettings;
             // enabled:
-            if (checkBox8.Checked) jrs[0] = 1;
-            if (checkBox9.Checked) jrs[0] = 2;
+            if (radioButton1.Checked) jrs[0] = 1;
+            if (radioButton2.Checked) jrs[0] = 2;
+            if (radioButton3.Checked) jrs[0] = 3;
+            if (int.TryParse(textBox4.Text.Trim(), out int a))
+                jrs[0 + Form1.JReminderShakeOffset] = a;
+            if (int.TryParse(textBox5.Text.Trim(), out int b))
+                jrs[1 + Form1.JReminderShakeOffset] = b;
             // weekdays:
-            jrs[1] = checkBox1.Checked ? 1 : 0;
-            jrs[2] = checkBox2.Checked ? 1 : 0;
-            jrs[3] = checkBox3.Checked ? 1 : 0;
-            jrs[4] = checkBox4.Checked ? 1 : 0;
-            jrs[5] = checkBox5.Checked ? 1 : 0;
-            jrs[6] = checkBox6.Checked ? 1 : 0;
-            jrs[7] = checkBox7.Checked ? 1 : 0;
+            // ui reading
+            for (int i = 0; i < DayCheckboxes.Length; i++) {
+                jrs[i + Form1.JReminderDaysOffset] = DayCheckboxes[i].Checked ? 1 : 0;
+            }
             // time:
-            if (int.TryParse(textBox1.Text.Trim(), out int x)) jrs[8] = x;
-            if (int.TryParse(textBox2.Text.Trim(), out int y)) jrs[9] = y;
-            if (int.TryParse(textBox3.Text.Trim(), out int z)) jrs[10] = z;
+            if (int.TryParse(textBox1.Text.Trim(), out int x)) jrs[0 + Form1.JReminderTimeOffset] = x;
+            if (int.TryParse(textBox2.Text.Trim(), out int y)) jrs[1 + Form1.JReminderTimeOffset] = y;
+            if (int.TryParse(textBox3.Text.Trim(), out int z)) jrs[2 + Form1.JReminderTimeOffset] = z;
             Close();
         }
 
@@ -156,28 +159,44 @@ namespace ennote
             textBox3.Text = DateTime.Now.Second.ToString("00");
         }
 
-        private void checkBox9_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox8.Checked = false;
-            foreach (var cb in DayCheckboxes)
-                if (checkBox9.Checked) cb.Hide(); else cb.Show();
-            if (checkBox9.Checked)
-                Height = 128;
-            else Height = OrigHeight;
-            Form1.JReminderSettings[0] = checkBox9.Checked ? 2 : 0;
-        }
-
-        private void checkBox8_CheckedChanged(object sender, EventArgs e)
-        {
-            checkBox9.Checked = false;
-            foreach (var cb in DayCheckboxes)
-                if (checkBox9.Checked) cb.Hide(); else cb.Show();
-            Form1.JReminderSettings[0] = checkBox8.Checked ? 1 : 0;
-        }
-
         private void button5_Click(object sender, EventArgs e)
         {
             textBox1.Text = textBox2.Text = textBox3.Text = "00";
+        }
+
+        private void radioButton1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton1.Checked) {
+                Form1.JReminderSettings[0] = 1;
+                Height = OrigHeight;
+                UseWeekdays = true;
+            }
+        }
+
+        private void radioButton2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton2.Checked) {
+                Form1.JReminderSettings[0] = 2;
+                Height = NoDaysHeight;
+                UseWeekdays = false;
+            }
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            radioButton1.Checked = radioButton2.Checked = radioButton3.Checked = false;
+            Form1.JReminderSettings[0] = 0;
+            Height = OrigHeight;
+            UseWeekdays = false;
+        }
+
+        private void radioButton3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton3.Checked) {
+                Form1.JReminderSettings[0] = 3;
+                Height = NoDaysHeight;
+                UseWeekdays = false;
+            }
         }
     }
 }

@@ -29,9 +29,14 @@ namespace ennote
         public static System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
         public static object[] JReminderSettings = new object[] {
             0, // on/off [0]
+            4, 32, // shake duration [5], range [24]
             0,0,0,0,0,0,0, // days [1...7]
             0,0,0 // time [8...10]
         };
+        public static int JReminderShakeOffset = 1;
+        public static int JReminderShakeAreaOffset = 1; // index=JReminderShakeOffset+JReminderShakeAreaOffset
+        public static int JReminderDaysOffset = 3;
+        public static int JReminderTimeOffset = 3 + 7;
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
@@ -122,8 +127,6 @@ namespace ennote
         int swX=0, swY=0;
         NotifyIcon ni = new NotifyIcon();
         bool m_FireReminder = false;
-        int m_ShakesDuration = 5;
-        int m_ShakeArea = 24;
         long m_ReminderEpoch = 0L;
         long m_ReminderLastEpoch = 0L;
         public Form1(string[] aArgs)
@@ -222,7 +225,7 @@ namespace ennote
             } else {
                 var deltaX = Math.Abs((FormX) - Left);
                 var deltaY = Math.Abs((FormY) - Top);
-                var maxDelta = 1 + m_ShakeArea * 2;
+                var maxDelta = 1 + (int)JReminderSettings[JReminderShakeAreaOffset + JReminderShakeOffset] * 2;
                 if (deltaX > maxDelta || deltaY > maxDelta) {
                     StopReminder();
                 }
@@ -242,15 +245,13 @@ namespace ennote
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
+            var shakeDuration = (int)JReminderSettings[1];
             var reminderType = (int)JReminderSettings[0];
             var dn = DateTime.Now;
-            var reminderTime = new int[] {
-                (int)JReminderSettings[8],
-                (int)JReminderSettings[9],
-                (int)JReminderSettings[10]
-            };
-            if (2 == reminderType) {
-                var timeSecs = reminderTime[0]*3600 + reminderTime[1]*60 + reminderTime[2];
+            if (shakeDuration < 1) shakeDuration = 1;
+            if (2 == reminderType || 3 == reminderType) {
+                var timeSecs = (int)JReminderSettings[0 + JReminderTimeOffset] * 3600 + (int)JReminderSettings[1 + JReminderTimeOffset] * 60 + (int)JReminderSettings[2 + JReminderTimeOffset];
+                if (timeSecs < 1) timeSecs = 1;
                 if (0 == m_ReminderLastEpoch) {
                     m_ReminderLastEpoch = timestamp();
                 }
@@ -260,25 +261,17 @@ namespace ennote
                 }
             } else if (1 == reminderType) {
                 var useDayed = false;
-                var days = new int[] {
-                    (int)JReminderSettings[1],
-                    (int)JReminderSettings[2],
-                    (int)JReminderSettings[3],
-                    (int)JReminderSettings[4],
-                    (int)JReminderSettings[5],
-                    (int)JReminderSettings[6],
-                    (int)JReminderSettings[7]
-                };
-                for (var i = 0; i < days.Length; i++)
-                    if (days[i] == 1) {
+                for (var i = 0; i < 7; i++)
+                    if ((int)JReminderSettings[i + JReminderDaysOffset] == 1) {
                         useDayed = true;
                         break;
                     }
                 // days [1...7]
                 // time [8...10]
-                if (reminderTime[0] == dn.Hour && reminderTime[1] == dn.Minute && reminderTime[2] == dn.Second) {
+                if ((int)JReminderSettings[0 + JReminderTimeOffset] == dn.Hour && (int)JReminderSettings[1 + JReminderTimeOffset] == dn.Minute && (int)JReminderSettings[2 + JReminderTimeOffset] == dn.Second) {
                     if (useDayed) {
-                        if (1 == days[(int)dn.DayOfWeek]) {
+                        var dow = (int)dn.DayOfWeek;
+                        if (1 == (int)JReminderSettings[dow + JReminderDaysOffset]) {
                             m_FireReminder = true;
                             m_ReminderEpoch = timestamp();
                         }
@@ -289,13 +282,16 @@ namespace ennote
                 }
             }
             if (m_FireReminder) {
-                if (timestamp() - m_ReminderEpoch >= m_ShakesDuration) {
+                if (timestamp() - m_ReminderEpoch >= shakeDuration) {
                     StopReminder();
+                    if (3 == reminderType)
+                        timer1.Enabled = false;
                 } else {
                     Show();
                     Activate();
-                    Top = FormY + rng.Next(0, m_ShakeArea);
-                    Left = FormX + rng.Next(0, m_ShakeArea);
+                    var maxArea = (int)JReminderSettings[JReminderShakeAreaOffset + JReminderShakeOffset];
+                    Top = FormY + rng.Next(0, maxArea);
+                    Left = FormX + rng.Next(0, maxArea);
                 }
             }
         }
@@ -375,6 +371,8 @@ namespace ennote
                 catch { }
                 try {
                     rTextBox1.Rtf = AES256.DecryptBytes(ebuffer, Password);
+                    m_ReminderLastEpoch = 0;
+                    timer1.Enabled = true;
                 } catch {
                     var dr = MessageBox.Show("Failed to decrypt file.\r\nRead as text?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     try {
@@ -525,12 +523,18 @@ namespace ennote
 
         private void setReminderToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            bool aliveTmr1 = timer1.Enabled;
             timer1.Enabled = false;
             var dd = new DateDialog("Pick date");
+            dd.StartPosition = FormStartPosition.CenterParent;
             dd.ShowDialog();
-            if (0 == dd.ResponseButton)
+            if (0 == dd.ResponseButton) {
                 SaveNote();
-            timer1.Enabled = true;
+                m_ReminderLastEpoch = 0;
+                timer1.Enabled = true;
+            }
+            if (aliveTmr1)
+                timer1.Enabled = true;
         }
 
         private void showTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
