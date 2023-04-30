@@ -4,7 +4,7 @@
 ![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=slowsient.ennote)
 
 ## Info
-This app is in alpha state, meaning it may be unstable or full of unintended features.<br>
+This app is in alpha state, so it may be unstable or have *unintended features*.<br>
 App uses AES encryption.<br>
 Binaries may be updated, so check binary date/version.<br>
 
