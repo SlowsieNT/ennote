@@ -26,14 +26,13 @@ namespace ennote
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
         public System.Windows.Forms.CheckBox[] DayCheckboxes = null;
-        int OrigHeight = 0, NoDaysHeight = 154;
+        int OrigHeight = 225, NoDaysHeight = 154;
         bool UseWeekdays = true;
         
         public DateDialog(string aTitle)
         {
             InitializeComponent();
             UpdateArgs(aTitle,true);
-            OrigHeight = Height;
             FormClosing += DateDialog_FormClosing;
             LText.MouseDown += MoveShit;
             panel1.MouseDown += MoveShit;
@@ -191,7 +190,9 @@ namespace ennote
             rbDaily.Checked = rbTimeX.Checked = rbTime1.Checked = false;
             Form1.JNoteSettings[0 + Form1.JNoteReminderOffset] = 0;
             Height = OrigHeight;
-            UseWeekdays = false;
+            UseWeekdays = true;
+            ResponseButton = 0;
+            Close();
         }
 
         private void radioButton3_CheckedChanged(object sender, EventArgs e)
