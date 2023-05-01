@@ -1,10 +1,12 @@
 ﻿using Microsoft.VisualBasic;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection.Emit;
@@ -25,19 +27,23 @@ namespace ennote
         string DefaultPassword = "";
         string FileName = "";
         string FileExt = ".rte";
+        DateDialog DateDialog1 = new DateDialog("");
+        PwDialog PwDialog1 = new PwDialog("", "", "");
         // System.Web.Extensions.dll
         public static System.Web.Script.Serialization.JavaScriptSerializer jss = new System.Web.Script.Serialization.JavaScriptSerializer();
-        public static object[] JReminderSettings = new object[] {
-            0, // on/off [0]
-            4, 32, // shake duration [5], range [24]
-            0,0,0,0,0,0,0, // days [1...7]
-            0,0,0 // time [8...10]
+        public static object[] JNoteSettings = new object[] {
+            0,
+            0, // on/off [1]
+            4, 32, // shake duration [2], range [3]
+            0,0,0,0,0,0,0, // days [4...10]
+            0,0,0 // time [11...13]
+            // [14]
         };
-        public static int JReminderShakeOffset = 1;
-        public static int JReminderShakeAreaOffset = 1; // index=JReminderShakeOffset+JReminderShakeAreaOffset
-        public static int JReminderDaysOffset = 3;
-        public static int JReminderTimeOffset = 3 + 7;
-
+        public static int JNoteAllowThemes = 0;
+        public static int JNoteReminderOffset = 1;
+        public static int JNoteDaysOffset = 4;
+        public static int JNoteTimeOffset = 4 + 7;
+        public static int JNoteThemeOffset = 3 + 11;
         public const int WM_NCLBUTTONDOWN = 0xA1;
         public const int HT_CAPTION = 0x2;
 
@@ -48,12 +54,11 @@ namespace ennote
         #region border
         protected override void OnPaint(PaintEventArgs e) // you can safely omit this method if you want
         {
-            e.Graphics.FillRectangle(Brushes.DimGray, RTop);
-            e.Graphics.FillRectangle(Brushes.DimGray, RLeft);
-            e.Graphics.FillRectangle(Brushes.DimGray, RRight);
-            e.Graphics.FillRectangle(Brushes.DimGray, RBottom);
+            e.Graphics.FillRectangle(Brushes.Transparent, RTop);
+            e.Graphics.FillRectangle(Brushes.Transparent, RLeft);
+            e.Graphics.FillRectangle(Brushes.Transparent, RRight);
+            e.Graphics.FillRectangle(Brushes.Transparent, RBottom);
         }
-
         private const int
             HTLEFT = 10,
             HTRIGHT = 11,
@@ -95,6 +100,7 @@ namespace ennote
             }
         }
         #endregion
+        
         long timestamp(bool aMS = false, long aAddVal = 0)
         {
             long epochTicks = new DateTime(1970, 1, 1).Ticks;
@@ -118,7 +124,7 @@ namespace ennote
         {
             try {
                 File.Delete(SaveFilename());
-                File.Delete(ReminderFilename());
+                File.Delete(SettingsFilename());
             } catch { }
             if (!aNoExit) Close();
         }
@@ -129,8 +135,15 @@ namespace ennote
         bool m_FireReminder = false;
         long m_ReminderEpoch = 0L;
         long m_ReminderLastEpoch = 0L;
+        public static Dictionary<string, Form> FormsDict = null;
         public Form1(string[] aArgs)
         {
+            // insert form handles
+            FormsDict = new Dictionary<string, Form>();
+            FormsDict.Add("mf", this);
+            FormsDict.Add("pw", PwDialog1);
+            FormsDict.Add("dd", DateDialog1);
+            // etc
             DefaultPassword = NewPassword();
             Password = DefaultPassword;
             UserDir = Directory.GetCurrentDirectory();
@@ -208,12 +221,12 @@ namespace ennote
                 }
                 lastclickdate = timestamp(true);
             };
-            contextMenuStrip1.ShowImageMargin = false;
-            contextMenuStrip2.ShowImageMargin = false;
-            contextMenuStrip3.ShowImageMargin = false;
-            contextMenuStrip1.Renderer = new ToolStripDarkRenderer();
-            contextMenuStrip2.Renderer = new ToolStripDarkRenderer();
-            contextMenuStrip3.Renderer = new ToolStripDarkRenderer();
+            cms1.ShowImageMargin = false;
+            cms2.ShowImageMargin = false;
+            cms3.ShowImageMargin = false;
+            cms1.Renderer = new ToolStripDarkRenderer();
+            cms2.Renderer = new ToolStripDarkRenderer();
+            cms3.Renderer = new ToolStripDarkRenderer();
             //etc
             ni.DoubleClick += Ni_DoubleClick;
         }
@@ -225,7 +238,7 @@ namespace ennote
             } else {
                 var deltaX = Math.Abs((FormX) - Left);
                 var deltaY = Math.Abs((FormY) - Top);
-                var maxDelta = 1 + (int)JReminderSettings[JReminderShakeAreaOffset + JReminderShakeOffset] * 2;
+                var maxDelta = 1 + (int)JNoteSettings[JNoteReminderOffset + 2] * 2;
                 if (deltaX > maxDelta || deltaY > maxDelta) {
                     StopReminder();
                 }
@@ -245,12 +258,13 @@ namespace ennote
         }
         private void timer1_Tick(object sender, EventArgs e)
         {
-            var shakeDuration = (int)JReminderSettings[1];
-            var reminderType = (int)JReminderSettings[0];
+            int reminderType = (int)JNoteSettings[0 + JNoteReminderOffset],
+                shakeDuration = (int)JNoteSettings[1 + JNoteReminderOffset],
+                shakeArea = (int)JNoteSettings[2 + JNoteReminderOffset];
             var dn = DateTime.Now;
             if (shakeDuration < 1) shakeDuration = 1;
             if (2 == reminderType || 3 == reminderType) {
-                var timeSecs = (int)JReminderSettings[0 + JReminderTimeOffset] * 3600 + (int)JReminderSettings[1 + JReminderTimeOffset] * 60 + (int)JReminderSettings[2 + JReminderTimeOffset];
+                var timeSecs = (int)JNoteSettings[0 + JNoteTimeOffset] * 3600 + (int)JNoteSettings[1 + JNoteTimeOffset] * 60 + (int)JNoteSettings[2 + JNoteTimeOffset];
                 if (timeSecs < 1) timeSecs = 1;
                 if (0 == m_ReminderLastEpoch) {
                     m_ReminderLastEpoch = timestamp();
@@ -262,16 +276,16 @@ namespace ennote
             } else if (1 == reminderType) {
                 var useDayed = false;
                 for (var i = 0; i < 7; i++)
-                    if ((int)JReminderSettings[i + JReminderDaysOffset] == 1) {
+                    if ((int)JNoteSettings[i + JNoteDaysOffset] == 1) {
                         useDayed = true;
                         break;
                     }
                 // days [1...7]
                 // time [8...10]
-                if ((int)JReminderSettings[0 + JReminderTimeOffset] == dn.Hour && (int)JReminderSettings[1 + JReminderTimeOffset] == dn.Minute && (int)JReminderSettings[2 + JReminderTimeOffset] == dn.Second) {
+                if ((int)JNoteSettings[0 + JNoteTimeOffset] == dn.Hour && (int)JNoteSettings[1 + JNoteTimeOffset] == dn.Minute && (int)JNoteSettings[2 + JNoteTimeOffset] == dn.Second) {
                     if (useDayed) {
                         var dow = (int)dn.DayOfWeek;
-                        if (1 == (int)JReminderSettings[dow + JReminderDaysOffset]) {
+                        if (1 == (int)JNoteSettings[dow + JNoteDaysOffset]) {
                             m_FireReminder = true;
                             m_ReminderEpoch = timestamp();
                         }
@@ -282,6 +296,7 @@ namespace ennote
                 }
             }
             if (m_FireReminder) {
+               // timer1.Enabled = false;
                 if (timestamp() - m_ReminderEpoch >= shakeDuration) {
                     StopReminder();
                     if (3 == reminderType)
@@ -289,16 +304,15 @@ namespace ennote
                 } else {
                     Show();
                     Activate();
-                    var maxArea = (int)JReminderSettings[JReminderShakeAreaOffset + JReminderShakeOffset];
-                    Top = FormY + rng.Next(0, maxArea);
-                    Left = FormX + rng.Next(0, maxArea);
+                    Top = FormY + rng.Next(0, shakeArea);
+                    Left = FormX + rng.Next(0, shakeArea);
                 }
             }
         }
         
         private void Ni_DoubleClick(object sender, EventArgs e)
         {
-            ShowInTaskbar = true;
+            Activate();
             Show();
         }
 
@@ -319,7 +333,7 @@ namespace ennote
                 SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
             }
         }
-        string ReminderFilename()
+        string SettingsFilename()
         {
             return SaveFilename() + ".json";
         }
@@ -327,11 +341,49 @@ namespace ennote
         {
             return UserDir + "/" + FileName;
         }
-        void SaveNote()
-        {
+        void ReadSettings() {
+            try {
+                JNoteSettings = jss.Deserialize<object[]>(File.ReadAllText(SettingsFilename()));
+                enableThemeEditToolStripMenuItem.Checked = 1 == (int)JNoteSettings[JNoteAllowThemes];
+                if (enableThemeEditToolStripMenuItem.Checked) {
+                    // divide arrays
+                    var xList = new List<object>();
+                    var xList2 = new List<object>();
+                    for (int i = 0, toLen = JNoteSettings.Length; i < toLen; i++)
+                        if (i < JNoteThemeOffset)
+                            xList.Add(JNoteSettings[i]);
+                        else xList2.Add(JNoteSettings[i]);
+                    // import theme
+                    Themer.ImportTheme(xList2.ToArray());
+                }
+            } catch { }
+        }
+        void SaveSettings(object[] aJTheme = null, bool aNewTheme = false) {
+            // divide arrays
+            var xList = new List<object>();
+            var xList2 = new List<object>();
+            for (int i = 0, toLen = JNoteSettings.Length; i < toLen; i++)
+                if (i < JNoteThemeOffset)
+                    xList.Add(JNoteSettings[i]);
+                else xList2.Add(JNoteSettings[i]);
+            // handle enable/disable
+            if (1 == (int)JNoteSettings[JNoteAllowThemes]) {
+                if (null != aJTheme)
+                    Themer.ImportTheme(aJTheme);
+                else aJTheme = Themer.GetCurrentTheme();
+                // (re)allocate to ram
+                xList.AddRange(aJTheme);
+            }
+            JNoteSettings = xList.ToArray();
+            try {
+                File.WriteAllText(SettingsFilename(), jss.Serialize(JNoteSettings));
+            } catch { }
+        }
+        void SaveNote() {
             if (!CanAutoSave) return;
             var sfn = SaveFilename();
             TrySaveFile(sfn);
+            SaveSettings();
         }
         void TrySaveFile(string aFileName, bool aAsPlain=false) {
             try {
@@ -341,9 +393,7 @@ namespace ennote
                 var fi = new FileInfo(aFileName);
                 FileName = fi.Name;
                 ni.Text = Text = FileName;
-                File.WriteAllText(ReminderFilename(),
-                    jss.Serialize(JReminderSettings)
-                );
+                SaveSettings();
             } catch { }
         }
         void ReadNote(string aFileName) {
@@ -352,7 +402,7 @@ namespace ennote
             var feFlag = File.Exists(aFileName);
             byte[] ebuffer = new byte[] { };
             if (!PasswordArgSet) {
-                var pwBox = new PasswordBox("Password / new password:" + (feFlag ? "\r\nFile: " + fi.Name : ""), "Enter note's password", Password);
+                var pwBox = new PwDialog("Password / new password:" + (feFlag ? "\r\nFile: " + fi.Name : ""), "Enter note's password", Password);
                 pwBox.StartPosition = FormStartPosition.CenterParent;
                 pwBox.ShowDialog();
                 Password = pwBox.ResponseValue;
@@ -367,12 +417,12 @@ namespace ennote
                     MessageBox.Show("Failed to read file.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     FileName = GenerateFilename();
                 }
-                try { JReminderSettings = jss.Deserialize<object[]>(File.ReadAllText(ReminderFilename())); }
-                catch { }
+                bool readOk = false;
                 try {
                     rTextBox1.Rtf = AES256.DecryptBytes(ebuffer, Password);
                     m_ReminderLastEpoch = 0;
                     timer1.Enabled = true;
+                    readOk = true;
                 } catch {
                     var dr = MessageBox.Show("Failed to decrypt file.\r\nRead as text?", "Error", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                     try {
@@ -391,6 +441,8 @@ namespace ennote
                         FileName = GenerateFilename();
                     }
                 }
+                if (readOk)
+                    ReadSettings();
             }
             if (FileName == "") FileName = GenerateFilename();
             label1.Text = FileName;
@@ -428,11 +480,6 @@ namespace ennote
             rTextBox1.Copy();
         }
 
-        private void topMostToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            TopMost = !TopMost;
-            topMostToolStripMenuItem.Checked = TopMost;
-        }
         private void fontToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var fd = new FontDialog();
@@ -485,8 +532,7 @@ namespace ennote
 
         private void button3_Click(object sender, EventArgs e)
         {
-            contextMenuStrip3.Show(new Point(button3.Location.X +4 + Location.X, 32 + button3.Location.Y + Location.Y));
-
+            cms3.Show(new Point(button3.Location.X +4 + Location.X, 32 + button3.Location.Y + Location.Y));
         }
 
         private void openToolStripMenuItem2_Click(object sender, EventArgs e)
@@ -521,11 +567,40 @@ namespace ennote
             saveAsToolStripMenuItem1_Click(sender, e);
         }
 
-        private void setReminderToolStripMenuItem_Click(object sender, EventArgs e)
+        private void acceptTabToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            rTextBox1.AcceptsTab = !rTextBox1.AcceptsTab;
+            acceptTabToolStripMenuItem.Checked = rTextBox1.AcceptsTab;
+        }
+
+        private void toggleTaskbarIconToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ShowInTaskbar = !ShowInTaskbar;
+        }
+
+        private void toggleTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ni.Visible = !ni.Visible;
+        }
+
+        private void hideShowTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hide();
+            ni.Visible = true;
+        }
+
+        private void topMostToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            TopMost = !TopMost;
+            topMostToolStripMenuItem1.Checked = TopMost;
+        }
+
+        private void setReminderToolStripMenuItem1_Click(object sender, EventArgs e)
         {
             bool aliveTmr1 = timer1.Enabled;
             timer1.Enabled = false;
-            var dd = new DateDialog("Pick date");
+            var dd = DateDialog1;
+            dd.UpdateArgs("Set reminder");
             dd.StartPosition = FormStartPosition.CenterParent;
             dd.ShowDialog();
             if (0 == dd.ResponseButton) {
@@ -537,9 +612,44 @@ namespace ennote
                 timer1.Enabled = true;
         }
 
-        private void showTrayIconToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exportDefaultThemeToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ni.Visible = !ni.Visible;
+            var tied = Themer.GetCurrentTheme();
+            File.WriteAllText(UserDir + "/default.theme.json", jss.Serialize(tied));
+        }
+
+        private void importThemeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            var ofd = new OpenFileDialog();
+            ofd.InitialDirectory = UserDir;
+            ofd.Filter = "JSON File|*.json|All Files|*.*";
+            var dr = ofd.ShowDialog();
+            if (dr == DialogResult.OK) {
+                var theme = jss.Deserialize<object[]>(File.ReadAllText(ofd.FileName));
+                JNoteSettings[JNoteAllowThemes] = 1;
+                SaveSettings(theme, true);
+                enableThemeEditToolStripMenuItem.Checked = true;
+            }
+        }
+
+        private void enableThemeEditToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (0 == (int)JNoteSettings[JNoteAllowThemes]) {
+                JNoteSettings[JNoteAllowThemes] = 1;
+            } else {
+                JNoteSettings[JNoteAllowThemes] = 0;
+                // remove irrelevant
+                var xList = new List<object>();
+                for (var i = 0; i < JNoteThemeOffset; i++)
+                    xList.Add(JNoteSettings[i]);
+                JNoteSettings = xList.ToArray();
+            }
+            enableThemeEditToolStripMenuItem.Checked = 1 == (int)JNoteSettings[JNoteAllowThemes];
+            SaveSettings();
+        }
+
+        private void hideToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Hide();
         }
         private void italicToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -570,7 +680,8 @@ namespace ennote
 
         private void newPasswordToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var pwBox = new PasswordBox("New Password:", "Enter note's new password", Password);
+            var pwBox = PwDialog1;
+            pwBox.UpdateArgs("New Password:", "Enter note's new password", Password);
             pwBox.ShowDialog();
             if (0 == pwBox.ResponseButton)
                 Password = pwBox.ResponseValue;

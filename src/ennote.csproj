@@ -75,6 +75,7 @@
     <Compile Include="DateDialog.Designer.cs">
       <DependentUpon>DateDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="Themer.cs" />
     <Compile Include="ToolStripDarkRenderer.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>

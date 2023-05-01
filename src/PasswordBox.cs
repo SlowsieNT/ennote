@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Deployment.Application;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace ennote
 {
-    public partial class PasswordBox : Form
+    public partial class PwDialog : Form
     {
         public string ResponseValue;
         /// <summary>
@@ -23,25 +24,29 @@ namespace ennote
         public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
-        public PasswordBox(string aPrompt, string aTitle, string aDefaultValue)
+        public void UpdateArgs(string aPrompt, string aTitle, string aDefaultValue)
+        {
+            LCtx.Text = aPrompt;
+            LText.Text = aTitle;
+            tbPwd.Text = aDefaultValue;
+        }
+        public PwDialog(string aPrompt, string aTitle, string aDefaultValue)
         {
             InitializeComponent();
-            label2.Text = aPrompt;
-            label1.Text = aTitle;
-            textBox1.Text = aDefaultValue;
+            UpdateArgs(aPrompt, aTitle, aDefaultValue);
             ResponseValue = aDefaultValue;
-            button4.Click += delegate (object s, EventArgs e) {
+            btnCancel.Click += delegate (object s, EventArgs e) {
                 // cancel
                 ResponseButton = 1;
                 Close();
             };
-            button3.Click += delegate (object s, EventArgs e) {
+            btnOK.Click += delegate (object s, EventArgs e) {
                 // ok
                 ResponseButton = 0;
-                ResponseValue = textBox1.Text;
+                ResponseValue = tbPwd.Text;
                 Close();
             };
-            label1.MouseDown += MoveShit;
+            LText.MouseDown += MoveShit;
             panel1.MouseDown += MoveShit;
         }
 
@@ -56,7 +61,7 @@ namespace ennote
         private void PasswordBox_Load(object sender, EventArgs e)
         {
             Text = "Enter Password";
-            textBox1.Select();
+            tbPwd.Select();
             try {
                 Icon = Icon.ExtractAssociatedIcon(Application.ExecutablePath);
             } catch { }
@@ -69,12 +74,12 @@ namespace ennote
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            textBox1.UseSystemPasswordChar = !checkBox1.Checked;
+            tbPwd.UseSystemPasswordChar = !cbSPwd.Checked;
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(textBox1.Text);
+            Clipboard.SetText(tbPwd.Text);
         }
 
     }

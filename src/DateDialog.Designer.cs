@@ -29,30 +29,30 @@
         private void InitializeComponent()
         {
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.LText = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox3 = new System.Windows.Forms.TextBox();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.checkBox2 = new System.Windows.Forms.CheckBox();
-            this.checkBox3 = new System.Windows.Forms.CheckBox();
-            this.checkBox4 = new System.Windows.Forms.CheckBox();
-            this.checkBox5 = new System.Windows.Forms.CheckBox();
-            this.checkBox6 = new System.Windows.Forms.CheckBox();
-            this.checkBox7 = new System.Windows.Forms.CheckBox();
+            this.btnOk = new System.Windows.Forms.Button();
+            this.tbMM = new System.Windows.Forms.TextBox();
+            this.tbHH = new System.Windows.Forms.TextBox();
+            this.tbSS = new System.Windows.Forms.TextBox();
+            this.cbDay1 = new System.Windows.Forms.CheckBox();
+            this.cbDay2 = new System.Windows.Forms.CheckBox();
+            this.cbDay3 = new System.Windows.Forms.CheckBox();
+            this.cbDay4 = new System.Windows.Forms.CheckBox();
+            this.cbDay5 = new System.Windows.Forms.CheckBox();
+            this.cbDay6 = new System.Windows.Forms.CheckBox();
+            this.cbDay7 = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.radioButton1 = new System.Windows.Forms.RadioButton();
-            this.radioButton2 = new System.Windows.Forms.RadioButton();
-            this.radioButton3 = new System.Windows.Forms.RadioButton();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.btnNow = new System.Windows.Forms.Button();
+            this.btnCancel = new System.Windows.Forms.Button();
+            this.btnClr = new System.Windows.Forms.Button();
+            this.rbDaily = new System.Windows.Forms.RadioButton();
+            this.rbTimeX = new System.Windows.Forms.RadioButton();
+            this.rbTime1 = new System.Windows.Forms.RadioButton();
+            this.tbDur = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox5 = new System.Windows.Forms.TextBox();
-            this.button6 = new System.Windows.Forms.Button();
+            this.tbArea = new System.Windows.Forms.TextBox();
+            this.btnDisable = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -61,23 +61,23 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(17)))), ((int)(((byte)(17)))), ((int)(((byte)(17)))));
-            this.panel1.Controls.Add(this.label1);
+            this.panel1.Controls.Add(this.LText);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(360, 32);
             this.panel1.TabIndex = 2;
             // 
-            // label1
+            // LText
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.label1.Location = new System.Drawing.Point(3, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(320, 23);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "label1";
+            this.LText.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+            this.LText.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.LText.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.LText.Location = new System.Drawing.Point(3, 9);
+            this.LText.Name = "LText";
+            this.LText.Size = new System.Drawing.Size(320, 23);
+            this.LText.TabIndex = 2;
+            this.LText.Text = "label1";
             // 
             // button2
             // 
@@ -94,145 +94,145 @@
             this.button2.UseVisualStyleBackColor = false;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
-            // button3
+            // btnOk
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button3.Location = new System.Drawing.Point(290, 47);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(58, 23);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "OK";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.button3_Click);
+            this.btnOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnOk.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnOk.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnOk.Location = new System.Drawing.Point(290, 47);
+            this.btnOk.Name = "btnOk";
+            this.btnOk.Size = new System.Drawing.Size(58, 23);
+            this.btnOk.TabIndex = 3;
+            this.btnOk.Text = "OK";
+            this.btnOk.UseVisualStyleBackColor = true;
+            this.btnOk.Click += new System.EventHandler(this.button3_Click);
             // 
-            // textBox2
+            // tbMM
             // 
-            this.textBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox2.Location = new System.Drawing.Point(51, 118);
-            this.textBox2.MaxLength = 2;
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(30, 26);
-            this.textBox2.TabIndex = 9;
-            this.textBox2.Text = "00";
-            this.textBox2.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
+            this.tbMM.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbMM.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbMM.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbMM.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tbMM.Location = new System.Drawing.Point(51, 118);
+            this.tbMM.MaxLength = 2;
+            this.tbMM.Name = "tbMM";
+            this.tbMM.Size = new System.Drawing.Size(30, 26);
+            this.tbMM.TabIndex = 9;
+            this.tbMM.Text = "00";
+            this.tbMM.TextChanged += new System.EventHandler(this.textBox2_TextChanged);
             // 
-            // textBox1
+            // tbHH
             // 
-            this.textBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox1.Location = new System.Drawing.Point(15, 118);
-            this.textBox1.MaxLength = 2;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(30, 26);
-            this.textBox1.TabIndex = 10;
-            this.textBox1.Text = "00";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.tbHH.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbHH.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbHH.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbHH.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tbHH.Location = new System.Drawing.Point(15, 118);
+            this.tbHH.MaxLength = 2;
+            this.tbHH.Name = "tbHH";
+            this.tbHH.Size = new System.Drawing.Size(30, 26);
+            this.tbHH.TabIndex = 10;
+            this.tbHH.Text = "00";
+            this.tbHH.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
-            // textBox3
+            // tbSS
             // 
-            this.textBox3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox3.Location = new System.Drawing.Point(86, 118);
-            this.textBox3.MaxLength = 2;
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(30, 26);
-            this.textBox3.TabIndex = 11;
-            this.textBox3.Text = "00";
-            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
+            this.tbSS.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbSS.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbSS.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbSS.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tbSS.Location = new System.Drawing.Point(86, 118);
+            this.tbSS.MaxLength = 2;
+            this.tbSS.Name = "tbSS";
+            this.tbSS.Size = new System.Drawing.Size(30, 26);
+            this.tbSS.TabIndex = 11;
+            this.tbSS.Text = "00";
+            this.tbSS.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
-            // checkBox1
+            // cbDay1
             // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox1.Location = new System.Drawing.Point(15, 152);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(106, 24);
-            this.checkBox1.TabIndex = 12;
-            this.checkBox1.Text = "checkBox1";
-            this.checkBox1.UseVisualStyleBackColor = true;
+            this.cbDay1.AutoSize = true;
+            this.cbDay1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay1.Location = new System.Drawing.Point(15, 152);
+            this.cbDay1.Name = "cbDay1";
+            this.cbDay1.Size = new System.Drawing.Size(106, 24);
+            this.cbDay1.TabIndex = 12;
+            this.cbDay1.Text = "checkBox1";
+            this.cbDay1.UseVisualStyleBackColor = true;
             // 
-            // checkBox2
+            // cbDay2
             // 
-            this.checkBox2.AutoSize = true;
-            this.checkBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox2.Location = new System.Drawing.Point(127, 152);
-            this.checkBox2.Name = "checkBox2";
-            this.checkBox2.Size = new System.Drawing.Size(106, 24);
-            this.checkBox2.TabIndex = 13;
-            this.checkBox2.Text = "checkBox2";
-            this.checkBox2.UseVisualStyleBackColor = true;
+            this.cbDay2.AutoSize = true;
+            this.cbDay2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay2.Location = new System.Drawing.Point(127, 152);
+            this.cbDay2.Name = "cbDay2";
+            this.cbDay2.Size = new System.Drawing.Size(106, 24);
+            this.cbDay2.TabIndex = 13;
+            this.cbDay2.Text = "checkBox2";
+            this.cbDay2.UseVisualStyleBackColor = true;
             // 
-            // checkBox3
+            // cbDay3
             // 
-            this.checkBox3.AutoSize = true;
-            this.checkBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox3.Location = new System.Drawing.Point(242, 152);
-            this.checkBox3.Name = "checkBox3";
-            this.checkBox3.Size = new System.Drawing.Size(106, 24);
-            this.checkBox3.TabIndex = 14;
-            this.checkBox3.Text = "checkBox3";
-            this.checkBox3.UseVisualStyleBackColor = true;
+            this.cbDay3.AutoSize = true;
+            this.cbDay3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay3.Location = new System.Drawing.Point(242, 152);
+            this.cbDay3.Name = "cbDay3";
+            this.cbDay3.Size = new System.Drawing.Size(106, 24);
+            this.cbDay3.TabIndex = 14;
+            this.cbDay3.Text = "checkBox3";
+            this.cbDay3.UseVisualStyleBackColor = true;
             // 
-            // checkBox4
+            // cbDay4
             // 
-            this.checkBox4.AutoSize = true;
-            this.checkBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox4.Location = new System.Drawing.Point(15, 173);
-            this.checkBox4.Name = "checkBox4";
-            this.checkBox4.Size = new System.Drawing.Size(106, 24);
-            this.checkBox4.TabIndex = 15;
-            this.checkBox4.Text = "checkBox4";
-            this.checkBox4.UseVisualStyleBackColor = true;
+            this.cbDay4.AutoSize = true;
+            this.cbDay4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay4.Location = new System.Drawing.Point(15, 173);
+            this.cbDay4.Name = "cbDay4";
+            this.cbDay4.Size = new System.Drawing.Size(106, 24);
+            this.cbDay4.TabIndex = 15;
+            this.cbDay4.Text = "checkBox4";
+            this.cbDay4.UseVisualStyleBackColor = true;
             // 
-            // checkBox5
+            // cbDay5
             // 
-            this.checkBox5.AutoSize = true;
-            this.checkBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox5.Location = new System.Drawing.Point(127, 173);
-            this.checkBox5.Name = "checkBox5";
-            this.checkBox5.Size = new System.Drawing.Size(106, 24);
-            this.checkBox5.TabIndex = 16;
-            this.checkBox5.Text = "checkBox5";
-            this.checkBox5.UseVisualStyleBackColor = true;
+            this.cbDay5.AutoSize = true;
+            this.cbDay5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay5.Location = new System.Drawing.Point(127, 173);
+            this.cbDay5.Name = "cbDay5";
+            this.cbDay5.Size = new System.Drawing.Size(106, 24);
+            this.cbDay5.TabIndex = 16;
+            this.cbDay5.Text = "checkBox5";
+            this.cbDay5.UseVisualStyleBackColor = true;
             // 
-            // checkBox6
+            // cbDay6
             // 
-            this.checkBox6.AutoSize = true;
-            this.checkBox6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox6.Location = new System.Drawing.Point(242, 173);
-            this.checkBox6.Name = "checkBox6";
-            this.checkBox6.Size = new System.Drawing.Size(106, 24);
-            this.checkBox6.TabIndex = 17;
-            this.checkBox6.Text = "checkBox6";
-            this.checkBox6.UseVisualStyleBackColor = true;
+            this.cbDay6.AutoSize = true;
+            this.cbDay6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay6.Location = new System.Drawing.Point(242, 173);
+            this.cbDay6.Name = "cbDay6";
+            this.cbDay6.Size = new System.Drawing.Size(106, 24);
+            this.cbDay6.TabIndex = 17;
+            this.cbDay6.Text = "checkBox6";
+            this.cbDay6.UseVisualStyleBackColor = true;
             // 
-            // checkBox7
+            // cbDay7
             // 
-            this.checkBox7.AutoSize = true;
-            this.checkBox7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.checkBox7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.checkBox7.Location = new System.Drawing.Point(15, 194);
-            this.checkBox7.Name = "checkBox7";
-            this.checkBox7.Size = new System.Drawing.Size(106, 24);
-            this.checkBox7.TabIndex = 18;
-            this.checkBox7.Text = "checkBox7";
-            this.checkBox7.UseVisualStyleBackColor = true;
+            this.cbDay7.AutoSize = true;
+            this.cbDay7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cbDay7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.cbDay7.Location = new System.Drawing.Point(15, 194);
+            this.cbDay7.Name = "cbDay7";
+            this.cbDay7.Size = new System.Drawing.Size(106, 24);
+            this.cbDay7.TabIndex = 18;
+            this.cbDay7.Text = "checkBox7";
+            this.cbDay7.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -245,104 +245,104 @@
             this.label2.TabIndex = 19;
             this.label2.Text = "Time (24h format):";
             // 
-            // button1
+            // btnNow
             // 
-            this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button1.Location = new System.Drawing.Point(122, 120);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(43, 23);
-            this.button1.TabIndex = 21;
-            this.button1.Text = "Now";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnNow.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnNow.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnNow.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnNow.Location = new System.Drawing.Point(122, 120);
+            this.btnNow.Name = "btnNow";
+            this.btnNow.Size = new System.Drawing.Size(43, 23);
+            this.btnNow.TabIndex = 21;
+            this.btnNow.Text = "Now";
+            this.btnNow.UseVisualStyleBackColor = true;
+            this.btnNow.Click += new System.EventHandler(this.button1_Click);
             // 
-            // button4
+            // btnCancel
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button4.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.button4.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button4.Location = new System.Drawing.Point(290, 73);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(58, 23);
-            this.button4.TabIndex = 23;
-            this.button4.Text = "Cancel";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnCancel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCancel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnCancel.Location = new System.Drawing.Point(290, 73);
+            this.btnCancel.Name = "btnCancel";
+            this.btnCancel.Size = new System.Drawing.Size(58, 23);
+            this.btnCancel.TabIndex = 23;
+            this.btnCancel.Text = "Cancel";
+            this.btnCancel.UseVisualStyleBackColor = true;
+            this.btnCancel.Click += new System.EventHandler(this.button4_Click);
             // 
-            // button5
+            // btnClr
             // 
-            this.button5.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button5.Location = new System.Drawing.Point(171, 120);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(48, 23);
-            this.button5.TabIndex = 24;
-            this.button5.Text = "Clear";
-            this.button5.UseVisualStyleBackColor = true;
-            this.button5.Click += new System.EventHandler(this.button5_Click);
+            this.btnClr.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnClr.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnClr.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnClr.Location = new System.Drawing.Point(171, 120);
+            this.btnClr.Name = "btnClr";
+            this.btnClr.Size = new System.Drawing.Size(48, 23);
+            this.btnClr.TabIndex = 24;
+            this.btnClr.Text = "Clear";
+            this.btnClr.UseVisualStyleBackColor = true;
+            this.btnClr.Click += new System.EventHandler(this.button5_Click);
             // 
-            // radioButton1
+            // rbDaily
             // 
-            this.radioButton1.AccessibleName = "repeattype";
-            this.radioButton1.AutoSize = true;
-            this.radioButton1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.radioButton1.Location = new System.Drawing.Point(15, 47);
-            this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(56, 20);
-            this.radioButton1.TabIndex = 26;
-            this.radioButton1.TabStop = true;
-            this.radioButton1.Text = "Daily";
-            this.radioButton1.UseVisualStyleBackColor = true;
-            this.radioButton1.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
+            this.rbDaily.AccessibleName = "repeattype";
+            this.rbDaily.AutoSize = true;
+            this.rbDaily.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbDaily.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.rbDaily.Location = new System.Drawing.Point(15, 47);
+            this.rbDaily.Name = "rbDaily";
+            this.rbDaily.Size = new System.Drawing.Size(56, 20);
+            this.rbDaily.TabIndex = 26;
+            this.rbDaily.TabStop = true;
+            this.rbDaily.Text = "Daily";
+            this.rbDaily.UseVisualStyleBackColor = true;
+            this.rbDaily.CheckedChanged += new System.EventHandler(this.radioButton1_CheckedChanged);
             // 
-            // radioButton2
+            // rbTimeX
             // 
-            this.radioButton2.AccessibleName = "repeattype";
-            this.radioButton2.AutoSize = true;
-            this.radioButton2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.radioButton2.Location = new System.Drawing.Point(77, 47);
-            this.radioButton2.Name = "radioButton2";
-            this.radioButton2.Size = new System.Drawing.Size(81, 20);
-            this.radioButton2.TabIndex = 27;
-            this.radioButton2.TabStop = true;
-            this.radioButton2.Text = "hh:mm:ss";
-            this.radioButton2.UseVisualStyleBackColor = true;
-            this.radioButton2.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
+            this.rbTimeX.AccessibleName = "repeattype";
+            this.rbTimeX.AutoSize = true;
+            this.rbTimeX.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbTimeX.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.rbTimeX.Location = new System.Drawing.Point(77, 47);
+            this.rbTimeX.Name = "rbTimeX";
+            this.rbTimeX.Size = new System.Drawing.Size(81, 20);
+            this.rbTimeX.TabIndex = 27;
+            this.rbTimeX.TabStop = true;
+            this.rbTimeX.Text = "hh:mm:ss";
+            this.rbTimeX.UseVisualStyleBackColor = true;
+            this.rbTimeX.CheckedChanged += new System.EventHandler(this.radioButton2_CheckedChanged);
             // 
-            // radioButton3
+            // rbTime1
             // 
-            this.radioButton3.AccessibleName = "repeattype";
-            this.radioButton3.AutoSize = true;
-            this.radioButton3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.radioButton3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.radioButton3.Location = new System.Drawing.Point(164, 47);
-            this.radioButton3.Name = "radioButton3";
-            this.radioButton3.Size = new System.Drawing.Size(116, 20);
-            this.radioButton3.TabIndex = 28;
-            this.radioButton3.TabStop = true;
-            this.radioButton3.Text = "Once hh:mm:ss";
-            this.radioButton3.UseVisualStyleBackColor = true;
-            this.radioButton3.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
+            this.rbTime1.AccessibleName = "repeattype";
+            this.rbTime1.AutoSize = true;
+            this.rbTime1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rbTime1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.rbTime1.Location = new System.Drawing.Point(164, 47);
+            this.rbTime1.Name = "rbTime1";
+            this.rbTime1.Size = new System.Drawing.Size(116, 20);
+            this.rbTime1.TabIndex = 28;
+            this.rbTime1.TabStop = true;
+            this.rbTime1.Text = "Once hh:mm:ss";
+            this.rbTime1.UseVisualStyleBackColor = true;
+            this.rbTime1.CheckedChanged += new System.EventHandler(this.radioButton3_CheckedChanged);
             // 
-            // textBox4
+            // tbDur
             // 
-            this.textBox4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox4.Location = new System.Drawing.Point(165, 72);
-            this.textBox4.MaxLength = 9;
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(58, 26);
-            this.textBox4.TabIndex = 29;
-            this.textBox4.Text = "5";
+            this.tbDur.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbDur.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbDur.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbDur.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tbDur.Location = new System.Drawing.Point(165, 72);
+            this.tbDur.MaxLength = 9;
+            this.tbDur.Name = "tbDur";
+            this.tbDur.Size = new System.Drawing.Size(58, 26);
+            this.tbDur.TabIndex = 29;
+            this.tbDur.Text = "5";
             // 
             // label3
             // 
@@ -355,62 +355,62 @@
             this.label3.TabIndex = 30;
             this.label3.Text = "Shake duration && range:";
             // 
-            // textBox5
+            // tbArea
             // 
-            this.textBox5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.textBox5.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.textBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.textBox5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.textBox5.Location = new System.Drawing.Point(227, 72);
-            this.textBox5.MaxLength = 4;
-            this.textBox5.Name = "textBox5";
-            this.textBox5.Size = new System.Drawing.Size(42, 26);
-            this.textBox5.TabIndex = 31;
-            this.textBox5.Text = "16";
+            this.tbArea.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
+            this.tbArea.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.tbArea.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.tbArea.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.tbArea.Location = new System.Drawing.Point(227, 72);
+            this.tbArea.MaxLength = 4;
+            this.tbArea.Name = "tbArea";
+            this.tbArea.Size = new System.Drawing.Size(42, 26);
+            this.tbArea.TabIndex = 31;
+            this.tbArea.Text = "16";
             // 
-            // button6
+            // btnDisable
             // 
-            this.button6.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.button6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.button6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.button6.Location = new System.Drawing.Point(290, 99);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(58, 23);
-            this.button6.TabIndex = 32;
-            this.button6.Text = "Disable";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
+            this.btnDisable.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnDisable.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnDisable.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.btnDisable.Location = new System.Drawing.Point(290, 99);
+            this.btnDisable.Name = "btnDisable";
+            this.btnDisable.Size = new System.Drawing.Size(58, 23);
+            this.btnDisable.TabIndex = 32;
+            this.btnDisable.Text = "Disable";
+            this.btnDisable.UseVisualStyleBackColor = true;
+            this.btnDisable.Click += new System.EventHandler(this.button6_Click);
             // 
             // DateDialog
             // 
-            this.AcceptButton = this.button3;
+            this.AcceptButton = this.btnOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(32)))), ((int)(((byte)(32)))), ((int)(((byte)(32)))));
-            this.CancelButton = this.button4;
+            this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(360, 225);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.textBox5);
+            this.Controls.Add(this.btnDisable);
+            this.Controls.Add(this.tbArea);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.radioButton3);
-            this.Controls.Add(this.radioButton2);
-            this.Controls.Add(this.radioButton1);
-            this.Controls.Add(this.button5);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.tbDur);
+            this.Controls.Add(this.rbTime1);
+            this.Controls.Add(this.rbTimeX);
+            this.Controls.Add(this.rbDaily);
+            this.Controls.Add(this.btnClr);
+            this.Controls.Add(this.btnCancel);
+            this.Controls.Add(this.btnNow);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.checkBox7);
-            this.Controls.Add(this.checkBox6);
-            this.Controls.Add(this.checkBox5);
-            this.Controls.Add(this.checkBox4);
-            this.Controls.Add(this.checkBox3);
-            this.Controls.Add(this.checkBox2);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.textBox3);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.button3);
+            this.Controls.Add(this.cbDay7);
+            this.Controls.Add(this.cbDay6);
+            this.Controls.Add(this.cbDay5);
+            this.Controls.Add(this.cbDay4);
+            this.Controls.Add(this.cbDay3);
+            this.Controls.Add(this.cbDay2);
+            this.Controls.Add(this.cbDay1);
+            this.Controls.Add(this.tbSS);
+            this.Controls.Add(this.tbHH);
+            this.Controls.Add(this.tbMM);
+            this.Controls.Add(this.btnOk);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Name = "DateDialog";
@@ -426,28 +426,28 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox3;
-        private System.Windows.Forms.CheckBox checkBox1;
-        private System.Windows.Forms.CheckBox checkBox2;
-        private System.Windows.Forms.CheckBox checkBox3;
-        private System.Windows.Forms.CheckBox checkBox4;
-        private System.Windows.Forms.CheckBox checkBox5;
-        private System.Windows.Forms.CheckBox checkBox6;
-        private System.Windows.Forms.CheckBox checkBox7;
+        private System.Windows.Forms.Button btnOk;
+        private System.Windows.Forms.Label LText;
+        private System.Windows.Forms.TextBox tbMM;
+        private System.Windows.Forms.TextBox tbHH;
+        private System.Windows.Forms.TextBox tbSS;
+        private System.Windows.Forms.CheckBox cbDay1;
+        private System.Windows.Forms.CheckBox cbDay2;
+        private System.Windows.Forms.CheckBox cbDay3;
+        private System.Windows.Forms.CheckBox cbDay4;
+        private System.Windows.Forms.CheckBox cbDay5;
+        private System.Windows.Forms.CheckBox cbDay6;
+        private System.Windows.Forms.CheckBox cbDay7;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.RadioButton radioButton1;
-        private System.Windows.Forms.RadioButton radioButton2;
-        private System.Windows.Forms.RadioButton radioButton3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Button btnNow;
+        private System.Windows.Forms.Button btnCancel;
+        private System.Windows.Forms.Button btnClr;
+        private System.Windows.Forms.RadioButton rbDaily;
+        private System.Windows.Forms.RadioButton rbTimeX;
+        private System.Windows.Forms.RadioButton rbTime1;
+        private System.Windows.Forms.TextBox tbDur;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox5;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.TextBox tbArea;
+        private System.Windows.Forms.Button btnDisable;
     }
 }
